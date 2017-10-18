@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm.c                                               :+:      :+:    :+:   */
+/*   ft_nm.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/18 13:22:14 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/18 15:31:17 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ int				loop_arg(char *av)
 	char		*ptr;
 
 	if ((fd = open(av, O_RDONLY)) < 0)
-		return (print_error(av, ": No such file or directory.\n"));
+		return (print_error(av, "No such file or directory"));
 	if (fstat(fd, &buf) < 0)
-		return (print_error(av, ": Error with fstat\n"));
+		return (print_error(av, "Error with fstat"));
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 	== MAP_FAILED)
-		return (print_error(av, ": Is a directory.\n"));
+		return (print_error(av, "Is a directory"));
 	nm(ptr);
 	if (munmap(ptr, buf.st_size) < 0)
-		return (print_error(av, ": Error with munmap\n"));
+		return (print_error(av, "Error with munmap"));
 	return (1);
 }
 

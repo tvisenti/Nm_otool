@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/18 14:29:15 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/18 16:58:24 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,43 @@
 
 int				print_error(char *file, char *str)
 {
-	ft_putstr("ft_nm: ");
-	ft_putstr(file);
-	ft_putstr(str);
+	ft_printf("ft_nm: %s: %s.\n", file, str);
 	return (0);
 }
 
 char			type_n_sect(unsigned int n_sect)
 {
+	ft_printf("n_sect: %d\n", n_sect);
 	if (n_sect == 1)
 		return ('T');
-	if (n_sect == 2)
+	if (n_sect == 10)
 		return ('D');
 	if (n_sect == 3)
 		return ('B');
 	return ('S');
 }
 
-char			get_type(uint32_t type, uint32_t n_sect, int addr)
+char			get_type(uint32_t type, uint32_t n_sect, int value)
 {
-	char car;
+	char c;
 
-	car = '?';
-	if ((type & N_TYPE) == N_UNDF)
-	{
-		if (addr)
-			car = 'C';
-		else
-			car = 'U';
-	}
-	else if ((type & N_TYPE) == N_ABS)
-		car = 'A';
-	else if ((type & N_TYPE) == N_SECT)
-		car = type_n_sect(n_sect);
-	else if ((type & N_TYPE) == N_PBUD)
-		car = 'U';
-	else if ((type & N_TYPE) == N_INDR)
-		car = 'I';
-	if (!(type & N_EXT) && car != '?')
-		car = ft_tolower(car);
-	return (car);
+	c = type;
+	if (c & N_STAB)
+		return ('-');
+	c = c & N_TYPE;
+	if (c == N_UNDF && value != 0)
+		c = 'C';
+	else if ((c == N_UNDF && value == 0) || c == N_PBUD)
+		c = 'U';
+	else if (c == N_ABS)
+		c = 'A';
+	else if (c == N_SECT)
+		c = type_n_sect(n_sect);
+	else
+		c = (c == N_INDR ? 'I' : '?');
+	if (!(type & N_EXT))
+		c = ft_tolower(c);
+	return (c);
 }
 
 void			display_output(unsigned int value, char *str, unsigned int type, uint32_t n_sect)

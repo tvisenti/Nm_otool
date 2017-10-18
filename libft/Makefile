@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/28 10:56:39 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/17 14:24:29 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/10/18 15:26:49 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +46,6 @@ all: $(NAME)
 $(NAME): $(OBJLIB)
 	@ar rc	$(NAME) $(OBJLIB)
 	@ranlib	$(NAME)
-	@echo "	_,  _ __, __, ___"
-	@echo "	|   | |_) |_   | "
-	@echo "	| , | |_) |    | "
-	@echo "	~~~ ~ ~   ~    ~ "
 	@echo "\033[1;34mLibft\t\t\033[1;33mCompilation\t\033[0;32m-OK-\033[0m"
 
 $(OBJLIB_PATH)/%.o: $(LIB_PATH)/%.c

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/18 14:25:56 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/18 16:51:13 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int					ft_printf(const char *str, ...);
 */
 
 void				handle_64(char *ptr);
-void				nm(char *ptr);
+void				ft_nm(char *ptr);
 int					loop_arg(char *av);
 
 /*
@@ -39,7 +39,7 @@ int					loop_arg(char *av);
 
 int					print_error(char *file, char *str);
 char				type_n_sect(unsigned int n_sect);
-char				get_type(uint32_t type, uint32_t n_sect, int addr);
+char				get_type(uint32_t type, uint32_t n_sect, int value);
 void				display_output(unsigned int value, char *str, unsigned int type, uint32_t n_sect);
 void				print_output(int nsyms, int symoff, int stroff, char *ptr);
 
@@ -47,7 +47,7 @@ void				print_output(int nsyms, int symoff, int stroff, char *ptr);
 ** SORT
 */
 
-struct nlist_64		*fill_array(struct nlist_64 *tab, int taille, char *stringtable);
-struct nlist_64		*tri_bulle(char *stringtable, struct nlist_64 *tab, int taille);
+struct nlist_64		*fill_array(struct nlist_64 *tab, int nsyms, char *stringtable);
+struct nlist_64		*tri_bulle(char *stringtable, struct nlist_64 *tab, int nsyms);
 
 #endif
