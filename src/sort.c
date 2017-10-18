@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:19:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/18 13:06:57 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/18 13:48:03 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 struct nlist_64     *fill_array(struct nlist_64 *tab, int taille, char *stringtable)
 {
-    struct nlist_64 *tab2;
     int             i;
+    struct nlist_64 *tab2;
 
     tab2 = (struct nlist_64*)malloc(sizeof(struct nlist_64) * taille);
     i = -1;
@@ -24,30 +24,30 @@ struct nlist_64     *fill_array(struct nlist_64 *tab, int taille, char *stringta
     return (tab2);
 }
 
-struct nlist_64		*tri_bulle(char *stringtable, struct nlist_64 *tab, int taille)
+struct nlist_64     *tri_bulle(char *stringtable, struct nlist_64 *tab, int taille)
 {
-    struct nlist_64	*tab2;
-    struct nlist_64	temp;
-    int				i;
-    int				j;
+    int             i;
+    int             j;
+    struct nlist_64 *new_tab;
+    struct nlist_64 temp;
 
     i = 0;
-    tab2 = fill_array(tab, taille, stringtable);
+    new_tab = fill_array(tab, taille, stringtable);
     while (i < taille)
     {
         j = 0;
-        while(j < taille)
+        while (j < taille)
         {
-            if (ft_strcmp(stringtable + tab2[i].n_un.n_strx,
-                stringtable + tab2[j].n_un.n_strx) < 0)
+            if (ft_strcmp(stringtable + new_tab[i].n_un.n_strx,
+                stringtable + new_tab[j].n_un.n_strx) < 0)
             {
-                temp = tab2[i];
-                tab2[i] = (struct nlist_64)tab2[j];
-                tab2[j] = temp;
+                temp = new_tab[i];
+                new_tab[i] = new_tab[j];
+                new_tab[j] = temp;
             }
             j++;
         }
         i++;
     }
-    return (tab2);
+    return (new_tab);
 }
