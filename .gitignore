@@ -10,6 +10,7 @@ nm
 ft_nm
 ft_otool
 otool
+res/
 
 # Linker output
 *.ilk
