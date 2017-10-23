@@ -6,32 +6,36 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/19 11:09:21 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/23 17:49:06 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/nm_otool.h"
 
-int				print_error(char *file, char *str)
+int				is_executable_file(void)
 {
-	ft_printf("ft_nm: %s: %s.\n", file, str);
+	if (g_stat.st_mode & S_IXUSR)
+	{
+		return (1);
+	}
 	return (0);
 }
 
-char			type_n_sect(unsigned int n_sect)
+char			type_n_sect(unsigned int n_sect, t_symtab *symt)
 {
-	if (n_sect == 1)
+	if (n_sect == symt->text)
 		return ('T');
-	if (n_sect == 10)
+	if (n_sect == symt->data)
 		return ('D');
-	if (n_sect == 3)
+	if (n_sect == symt->bss)
 		return ('B');
 	return ('S');
 }
 
-char			get_type(uint32_t type, uint32_t n_sect, int value)
+char			get_type(uint32_t type, uint32_t n_sect, int value,
+	t_symtab *symt)
 {
-	char c;
+	char		c;
 
 	c = type;
 	if (c & N_STAB)
@@ -44,7 +48,7 @@ char			get_type(uint32_t type, uint32_t n_sect, int value)
 	else if (c == N_ABS)
 		c = 'A';
 	else if (c == N_SECT)
-		c = type_n_sect(n_sect);
+		c = type_n_sect(n_sect, symt);
 	else
 		c = (c == N_INDR ? 'I' : '?');
 	if (!(type & N_EXT))
@@ -52,28 +56,39 @@ char			get_type(uint32_t type, uint32_t n_sect, int value)
 	return (c);
 }
 
-void			display_output(unsigned int value, char *str, unsigned int type, uint32_t n_sect)
+void			display_output(struct nlist elem, char *str, t_symtab *symt)
 {
 	char		c;
 
-	c = get_type(type, n_sect, value);
-	// if (value == 0)
-	// 	ft_printf("%16s %c %s\n", " ", c, str);
-	// else
-	// 	ft_printf("00000001%08s %c %s\n", ft_itoa_base(value, 16), c, str);
+	c = get_type(elem.n_type, elem.n_sect, elem.n_value, symt);
+	if (elem.n_value == 0 && c == 'U')
+	{
+		if (ft_strcmp("__mh_execute_header", str) == 0)
+			ft_printf("%08c %c %s\n", '0', c, str);
+		else
+			ft_printf("%8c %c %s\n", ' ', c, str);
+	}
+	else if (is_executable_file())
+		ft_printf("%08x %c %s\n", elem.n_value, c, str);
+	else
+		ft_printf("%08x %c %s\n", elem.n_value, c, str);
 }
 
-void			print_output(int nsyms, int symoff, int stroff, char *ptr)
+void			display_output_64(struct nlist_64 elem, char *str,
+	t_symtab *symt)
 {
-	int				i;
-	char			*stringtable;
-	struct nlist_64	*array;
+	char		c;
 
-	i = -1;
-	array = (void *)ptr + symoff;
-	stringtable = (void *)ptr + stroff;
-	array = tri_bulle(stringtable, array, nsyms);
-	while (++i < nsyms)
-		display_output(array[i].n_value, stringtable + array[i].n_un.n_strx,
-			array[i].n_type, array[i].n_sect);
+	c = get_type(elem.n_type, elem.n_sect, elem.n_value, symt);
+	if (elem.n_value == 0 && c == 'U')
+	{
+		if (ft_strcmp("__mh_execute_header", str) == 0)
+			ft_printf("%08c%08c %c %s\n", '1', '0', c, str);
+		else
+			ft_printf("%16c %c %s\n", ' ', c, str);
+	}
+	else if (is_executable_file())
+		ft_printf("%08c%08x %c %s\n", '1', elem.n_value, c, str);
+	else
+		ft_printf("%016x %c %s\n", elem.n_value, c, str);
 }

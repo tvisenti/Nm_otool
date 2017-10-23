@@ -6,40 +6,28 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/19 11:28:28 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/23 17:51:31 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/nm_otool.h"
 
-// ne fonctionne pas avec le .o du meme nom il devrait etre 0000000000000000
-
-void			handle_64(char *ptr)
+t_symtab		init_symtab(t_symtab symt)
 {
-	int						i;
-	int						ncmds;
-	struct mach_header_64	*header;
-	struct load_command		*lc;
-	struct symtab_command	*sym;
+	symt.data = 0;
+	symt.bss = 0;
+	symt.text = 0;
+	symt.i = -1;
+	symt.j = 0;
+	symt.ns = 1;
+	symt.exec = 0;
+	return (symt);
+}
 
-	i = -1;
-	header = (struct mach_header_64 *)ptr;
-	ncmds = header->ncmds;
-	lc = (void *)ptr + sizeof(*header);
-	while (++i < ncmds)
-	{
-		if (lc->cmd == LC_SYMSEG)
-		{
-			ft_putstr("Bonjour\n");
-		}
-		if (lc->cmd == LC_SYMTAB)
-		{
-			sym = (struct symtab_command *)lc;
-			print_output(sym->nsyms, sym->symoff, sym->stroff, ptr);
-			break ;
-		}
-		lc = (void *)lc + lc->cmdsize;
-	}
+int				print_error(char *file, char *str)
+{
+	ft_printf("ft_nm: %s: %s.\n", file, str);
+	return (0);
 }
 
 void			nm(char *ptr)
@@ -49,6 +37,10 @@ void			nm(char *ptr)
 	magic_number = *(int *)ptr;
 	if (magic_number == MH_MAGIC_64)
 		handle_64(ptr);
+	else if (magic_number == MH_MAGIC)
+		handle_32(ptr);
+	else
+		ft_printf("Fichier non gere: \n%s\n", ptr);
 }
 
 int				loop_arg(char *av)
@@ -64,6 +56,7 @@ int				loop_arg(char *av)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 	== MAP_FAILED)
 		return (print_error(av, "Is a directory"));
+	g_stat = buf;
 	nm(ptr);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (print_error(av, "Error with munmap"));
@@ -78,10 +71,7 @@ int				main(int ac, char **av)
 	i = 1;
 	str = NULL;
 	if (ac == 1)
-	{
 		loop_arg("a.out");
-		return (EXIT_FAILURE);
-	}
 	while (i < ac)
 	{
 		str = av[i];

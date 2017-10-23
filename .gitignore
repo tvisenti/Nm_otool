@@ -11,6 +11,8 @@ ft_nm
 ft_otool
 otool
 res/
+mine
+original
 
 # Linker output
 *.ilk

@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/18 14:42:35 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/18 15:29:32 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/10/23 17:54:47 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,15 @@ SRC_DIR	= ./src
 
 SRC =	ft_nm.c \
 		sort.c \
-		display.c
+		display.c \
+		arch_64.c \
+		arch_32.c
 
 VPATH	= $(SRC_DIR)
 
 O_DIR	= ./obj
 OBJ		= $(addprefix $(O_DIR)/,$(SRC:.c=.o))
+SRC_PATH= $(addprefix $(SRC_DIR)/, $(SRC))
 
 CC = gcc
 
@@ -59,14 +62,14 @@ clean:
 
 fclean: clean
 	@make fclean -C libft
-	@rm -rf $(O_DIR) res/
 	@echo "\033[1;34mNm_otool\t\033[1;33mCleaning lib\t\033[0;32m-OK-\033[0m"
+	@rm -rf $(O_DIR) res/
 
 re: fclean all
 
 norme:
-	@norminette $(SRC) $(I_LIBFT)
-	@echo "\033[1;34mNm_otool\t\033[1;33mNorminette\t\033[0;32m-OK-\033[0m"
 	@make norme -C libft
+	@echo "\033[1;34mNm_otool\t\033[1;33mNorminette\t\033[0;32m-OK-\033[0m"
+	@norminette $(SRC_PATH)
 
 .PHONY: re fclean clean all norme res
