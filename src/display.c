@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/18 16:58:24 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/19 11:09:21 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int				print_error(char *file, char *str)
 
 char			type_n_sect(unsigned int n_sect)
 {
-	ft_printf("n_sect: %d\n", n_sect);
 	if (n_sect == 1)
 		return ('T');
 	if (n_sect == 10)
@@ -58,10 +57,10 @@ void			display_output(unsigned int value, char *str, unsigned int type, uint32_t
 	char		c;
 
 	c = get_type(type, n_sect, value);
-	if (value == 0)
-		ft_printf("%16s %c %s\n", " ", c, str);
-	else
-		ft_printf("00000001%08s %c %s\n", ft_itoa_base(value, 16), c, str);
+	// if (value == 0)
+	// 	ft_printf("%16s %c %s\n", " ", c, str);
+	// else
+	// 	ft_printf("00000001%08s %c %s\n", ft_itoa_base(value, 16), c, str);
 }
 
 void			print_output(int nsyms, int symoff, int stroff, char *ptr)

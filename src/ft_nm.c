@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/18 15:31:17 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/19 11:28:28 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void			handle_64(char *ptr)
 	lc = (void *)ptr + sizeof(*header);
 	while (++i < ncmds)
 	{
+		if (lc->cmd == LC_SYMSEG)
+		{
+			ft_putstr("Bonjour\n");
+		}
 		if (lc->cmd == LC_SYMTAB)
 		{
 			sym = (struct symtab_command *)lc;
