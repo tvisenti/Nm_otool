@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/23 17:49:34 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 11:12:31 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 static void		symtab_building_bis_64(t_symtab *symt,
 	struct segment_command_64 *seg, struct section_64 *sect)
 {
-	symt->i = 0;
-	while (symt->i < seg->nsects)
+	int			i;
+
+	i = -1;
+	while (++i < seg->nsects)
 	{
 		if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
 		ft_strcmp(sect->segname, SEG_TEXT) == 0)
@@ -29,17 +31,18 @@ static void		symtab_building_bis_64(t_symtab *symt,
 			symt->bss = symt->ns;
 		sect = (void *)sect + sizeof(*sect);
 		symt->ns++;
-		symt->i++;
 	}
 }
 
 void			symtab_building_64(t_symtab *symt,
 	struct mach_header_64 *header, struct load_command *lc)
 {
+	int							j;
 	struct segment_command_64	*seg;
 	struct section_64			*sect;
 
-	while (symt->j < header->ncmds)
+	j = -1;
+	while (++j < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
 		{
@@ -48,7 +51,6 @@ void			symtab_building_64(t_symtab *symt,
 			symtab_building_bis_64(symt, seg, sect);
 		}
 		lc = (void *)lc + lc->cmdsize;
-		symt->j++;
 	}
 }
 

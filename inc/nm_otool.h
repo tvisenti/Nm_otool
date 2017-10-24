@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/23 17:51:08 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 11:12:59 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ typedef struct		s_symtab
 	int				data;
 	int				bss;
 	int				text;
-	int				i;
-	int				j;
 	int				ns;
-	int				exec;
 }					t_symtab;
 
 int					ft_printf(const char *str, ...);

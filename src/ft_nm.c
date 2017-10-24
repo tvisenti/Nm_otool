@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/23 17:51:31 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 11:32:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ t_symtab		init_symtab(t_symtab symt)
 	symt.data = 0;
 	symt.bss = 0;
 	symt.text = 0;
-	symt.i = -1;
-	symt.j = 0;
 	symt.ns = 1;
-	symt.exec = 0;
 	return (symt);
 }
 

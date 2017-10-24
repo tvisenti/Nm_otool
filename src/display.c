@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/23 17:49:06 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 11:10:44 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int				is_executable_file(void)
 {
 	if (g_stat.st_mode & S_IXUSR)
-	{
 		return (1);
-	}
 	return (0);
 }
 
