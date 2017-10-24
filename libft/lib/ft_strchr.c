@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 10:19:43 by tvisenti          #+#    #+#             */
-/*   Updated: 2016/02/09 11:39:56 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 18:39:33 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	unsigned int i;
+	unsigned char		i;
 
-	i = 0;
-	while (s[i] != '\0')
+	i = c;
+	if (s == NULL)
+		return (NULL);
+	while (*s != i)
 	{
-		if (s[i] == c)
-			return ((char *)s + i);
-		i++;
+		if (*s == '\0')
+			return (NULL);
+		s++;
 	}
-	if (!c && s[i] == '\0')
-		return ((char *)s + i);
-	return (NULL);
+	return ((char *)s);
 }

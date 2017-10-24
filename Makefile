@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/18 14:42:35 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/23 17:54:47 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/10/24 17:26:34 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC =	ft_nm.c \
 		sort.c \
 		display.c \
 		arch_64.c \
-		arch_32.c
+		arch_32.c \
+		arch_lib.c
 
 VPATH	= $(SRC_DIR)
 
@@ -40,7 +41,7 @@ LIBFT = $(I_LIBFT) -Llibft -lft
 
 all : $(NAME)
 
-$(NAME): obj $(OBJ)
+$(NAME): obj $(OBJ) res
 	@make -C libft
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(HEADERS) $(LIBFT) $(I_PRINTF)
 	@echo "\033[1;34mNm_otool\t\033[1;33mCompilation\t\033[0;32m-OK-\033[0m"
@@ -55,6 +56,7 @@ res:
 	@mkdir -p res/
 	@cat /usr/include/mach-o/loader.h > res/loader.h
 	@cat /usr/include/mach-o/nlist.h > res/nlist.h
+	@cat /usr/include/ar.h > res/ar.h
 
 clean:
 	@rm -rf $(OBJ) $(NAME)

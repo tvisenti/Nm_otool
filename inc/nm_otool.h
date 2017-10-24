@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 11:12:59 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 18:37:41 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <mach-o/loader.h>
 # include <mach-o/nlist.h>
 # include <fcntl.h>
+# include <ar.h>
+# include <mach-o/ranlib.h>
 # include <sys/stat.h>
 # include <stdlib.h>
 # include "../libft/inc/libft.h"
@@ -35,6 +37,13 @@ typedef struct		s_symtab
 	int				ns;
 }					t_symtab;
 
+typedef struct			s_offlist
+{
+	uint32_t			off;
+	uint32_t			strx;
+	struct s_offlist	*next;
+}						t_offlist;
+
 int					ft_printf(const char *str, ...);
 
 /*
@@ -43,7 +52,7 @@ int					ft_printf(const char *str, ...);
 
 t_symtab			init_symtab(t_symtab symt);
 int					print_error(char *file, char *str);
-void				nm(char *ptr);
+void				nm(void *ptr, char *file);
 int					loop_arg(char *av);
 
 /*
@@ -95,5 +104,16 @@ void				symtab_building(t_symtab *symt,
 void				print_output(struct symtab_command *sym,
 	struct mach_header *header, char *ptr);
 void				handle_32(char *ptr);
+
+/*
+** ARCH_LIB
+*/
+
+int					catch_size(char *name);
+char				*catch_name(char *name);
+t_offlist			*add_off(t_offlist *lst, uint32_t off, uint32_t strx);
+void				print_ar(uint32_t off, char *ptr, char *file);
+void				browse_ar(t_offlist *lst, char *ptr, char *name);
+void				handle_lib(char *ptr, char *name);
 
 #endif

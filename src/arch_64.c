@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 11:12:31 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 18:51:03 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static void		symtab_building_bis_64(t_symtab *symt,
 void			symtab_building_64(t_symtab *symt,
 	struct mach_header_64 *header, struct load_command *lc)
 {
-	int							j;
+	int							i;
 	struct segment_command_64	*seg;
 	struct section_64			*sect;
 
-	j = -1;
-	while (++j < header->ncmds)
+	i = -1;
+	while (++i < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
 		{

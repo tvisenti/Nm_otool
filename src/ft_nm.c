@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 11:32:50 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/24 18:31:42 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,28 @@ int				print_error(char *file, char *str)
 	return (0);
 }
 
-void			nm(char *ptr)
+void			nm(void *ptr, char *file)
 {
-	int	magic_number;
+	int				magic_number;
+	struct ar_hdr	*ar;
 
+	ar = (void*)ptr;
 	magic_number = *(int *)ptr;
 	if (magic_number == MH_MAGIC_64)
 		handle_64(ptr);
 	else if (magic_number == MH_MAGIC)
 		handle_32(ptr);
+	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
+		handle_lib(ptr, file);
 	else
-		ft_printf("Fichier non gere: \n%s\n", ptr);
+		print_error(file, "The file was not recognized as a valid object file");
 }
 
 int				loop_arg(char *av)
 {
 	struct stat	buf;
 	int			fd;
-	char		*ptr;
+	void		*ptr;
 
 	if ((fd = open(av, O_RDONLY)) < 0)
 		return (print_error(av, "No such file or directory"));
@@ -54,7 +58,7 @@ int				loop_arg(char *av)
 	== MAP_FAILED)
 		return (print_error(av, "Is a directory"));
 	g_stat = buf;
-	nm(ptr);
+	nm(ptr, av);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (print_error(av, "Error with munmap"));
 	return (1);
