@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 13:06:47 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:10:12 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int				print_error(char *file, char *str)
 	return (0);
 }
 
-void			nm(void *ptr, char *file)
+void			ft_nm(void *ptr, char *file)
 {
 	int				magic_number;
 	struct ar_hdr	*ar;
@@ -57,7 +57,7 @@ int				loop_arg(char *av)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 	== MAP_FAILED)
 		return (print_error(av, "Is a directory"));
-	nm(ptr, av);
+	ft_nm(ptr, av);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (print_error(av, "Error with munmap"));
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:05:29 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:09:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ typedef struct			s_offlist
 int					ft_printf(const char *str, ...);
 
 /*
-** NM
+** FT_NM
 */
 
 t_symtab			init_symtab(t_symtab symt);
 int					print_error(char *file, char *str);
-void				nm(void *ptr, char *file);
+void				ft_nm(void *ptr, char *file);
 int					loop_arg(char *av);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:04:57 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:10:07 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			print_ar(t_offlist *lst, char *ptr, char *file)
 		name = get_name(arch->ar_name);
 		size_name = get_size(arch->ar_name);
 		ft_printf("\n%s(%s):\n", file, name);
-		nm((void*)arch + sizeof(*arch) + size_name, file);
+		ft_nm((void*)arch + sizeof(*arch) + size_name, file);
 		tmp = tmp->next;
 	}
 }
