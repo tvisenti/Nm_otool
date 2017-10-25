@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:10:12 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 18:24:59 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_symtab		init_symtab(t_symtab symt)
 int				print_error(char *file, char *str)
 {
 	ft_printf("ft_nm: %s: %s.\n", file, str);
-	return (0);
+	exit (1);
 }
 
 void			ft_nm(void *ptr, char *file)
@@ -40,6 +40,8 @@ void			ft_nm(void *ptr, char *file)
 		handle_32(ptr);
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
 		handle_lib(ptr, file);
+	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
+		handle_fat(ptr);
 	else
 		print_error(file, "The file was not recognized as a valid object file");
 }

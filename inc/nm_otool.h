@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:09:50 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 17:28:15 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <ar.h>
 # include <mach-o/ranlib.h>
+# include <mach-o/fat.h>
 # include <sys/stat.h>
 # include <stdlib.h>
 # include "../libft/inc/libft.h"
@@ -113,6 +114,13 @@ char				*get_name(char *name);
 t_offlist			*add_off(t_offlist *lst, uint32_t off, uint32_t strx);
 void				print_ar(t_offlist *lst, char *ptr, char *file);
 void				handle_lib(char *ptr, char *name);
+
+/*
+** ARCH_FAT
+*/
+
+uint32_t		swap_uint32(uint32_t val);
+void			handle_fat(char *ptr);
 
 /*
 ** UTILS

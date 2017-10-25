@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:01:07 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 17:13:06 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,36 @@ void			symtab_building_64(t_symtab *symt,
 	}
 }
 
+static void    sort_duplicate_strx_by_value_64(struct nlist_64 *array, char *stringtable, struct load_command *lc, uint32_t size)
+{
+    uint64_t        tmp_value;
+    int                sorted;
+    int                increment;
+
+    sorted = 0;
+    tmp_value = 0;
+    increment = 0;
+    while (!sorted)
+    {
+        sorted = 1;
+        increment = 0;
+        while (increment < size - 1)
+        {
+            if (ft_strcmp(stringtable + array[increment].n_un.n_strx, stringtable + array[increment + 1].n_un.n_strx) == 0)
+            {
+                if (array[increment].n_value > array[increment + 1].n_value)
+                {
+                    tmp_value = array[increment + 1].n_value;
+                    array[increment + 1].n_value = array[increment].n_value;
+                    array[increment].n_value = tmp_value;
+                    sorted = 0;
+                }
+            }
+            ++increment;
+        }
+    }
+}
+
 void			print_output_64(struct symtab_command *sym,
 	struct mach_header_64 *header, char *ptr)
 {
@@ -69,6 +99,7 @@ void			print_output_64(struct symtab_command *sym,
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
 	array = bubble_sort_64(stringtable, array, sym->nsyms);
+	sort_duplicate_strx_by_value_64(array, stringtable, lc, sym->nsyms);
 	symtab_building_64(&symt, header, lc);
 	while (++i < sym->nsyms)
 		display_output_64(array[i], stringtable + array[i].n_un.n_strx, &symt);

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:10:07 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 17:35:11 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void			print_ar(t_offlist *lst, char *ptr, char *file)
 		arch = (void*)ptr + tmp->off;
 		name = get_name(arch->ar_name);
 		size_name = get_size(arch->ar_name);
+		if (ft_strcmp("ATCSRouterIPCDriver.o", name) == 0)
+			ft_printf("TEST");
 		ft_printf("\n%s(%s):\n", file, name);
 		ft_nm((void*)arch + sizeof(*arch) + size_name, file);
 		tmp = tmp->next;
