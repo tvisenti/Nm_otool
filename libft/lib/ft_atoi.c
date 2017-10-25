@@ -6,13 +6,27 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 12:25:22 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 18:40:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 13:15:25 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/libft.h"
 
-int		ft_atoi(const char *str)
+static int	ft_atoi_loop(const char *str, int i)
+{
+	int		compt;
+
+	compt = 0;
+	while (ft_isdigit(str[i]))
+	{
+		compt = compt * 10;
+		compt = compt + str[i] - '0';
+		i++;
+	}
+	return (compt);
+}
+
+int			ft_atoi(const char *str)
 {
 	int		i;
 	int		compt;
@@ -32,12 +46,7 @@ int		ft_atoi(const char *str)
 	}
 	else if (str[i] == '+')
 		i++;
-	while (ft_isdigit(str[i]))
-	{
-		compt = compt * 10;
-		compt = compt + str[i] - '0';
-		i++;
-	}
+	compt = ft_atoi_loop(str, i);
 	if (min > 0)
 		return (-compt);
 	return (compt);
