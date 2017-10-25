@@ -6,28 +6,30 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 18:52:44 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 12:51:45 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/nm_otool.h"
 
-int			catch_size(char *name)
+int				get_size(char *name)
 {
-	int		x;
+	int		i;
 	char	*word;
 
 	word = ft_strchr(name, '/') + 1;
-	x = ft_atoi(word);
-	return (x);
+	i = ft_atoi(word);
+	return (i);
 }
 
-char		*catch_name(char *name)
+char			*get_name(char *name)
 {
+	char	*str;
 	int		length;
 
 	length = ft_strlen(ARFMAG);
-	return (ft_strstr(name, ARFMAG) + length);
+	str = ft_strstr(name, ARFMAG) + length;
+	return (str);
 }
 
 t_offlist		*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
@@ -48,53 +50,40 @@ t_offlist		*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
 	return (lst);
 }
 
-void			print_ar(uint32_t off, char *ptr, char *file)
+void			print_ar(t_offlist *lst, char *ptr, char *file)
 {
+	t_offlist		*tmp;
 	int				size_name;
 	struct ar_hdr	*arch;
 	char			*name;
 
-	arch = (void*)ptr + off;
-	name = catch_name(arch->ar_name);
-	size_name = catch_size(arch->ar_name);
-	ft_printf("\n%s(%s):\n", file, name);
-	nm((void*)arch + sizeof(*arch) + size_name, file);
-}
-
-void			browse_ar(t_offlist *lst, char *ptr, char *name)
-{
-	t_offlist	*tmp;
-
 	tmp = lst;
 	while (tmp)
 	{
-		print_ar(tmp->off, ptr, name);
+		arch = (void*)ptr + tmp->off;
+		name = get_name(arch->ar_name);
+		size_name = get_size(arch->ar_name);
+		ft_printf("\n%s(%s):\n", file, name);
+		nm((void*)arch + sizeof(*arch) + size_name, file);
 		tmp = tmp->next;
 	}
 }
 
-void	handle_lib(char *ptr, char *name)
+void			handle_lib(char *ptr, char *name)
 {
-	struct ar_hdr	*arch;
 	struct ranlib	*ran;
 	t_offlist		*lst;
-	char			*test;
 	int				i;
 	int				size;
-	int				size_name;
+	char			*offset_struct;
 
-	i = 0;
-	arch = (void*)ptr + SARMAG;
-	size_name = catch_size(arch->ar_name);
-	test = (void*)ptr + sizeof(*arch) + SARMAG + size_name;
-	ran = (void*)ptr + sizeof(*arch) + SARMAG + size_name + 4;
-	size = *((int *)test);
 	lst = NULL;
-	size = size / sizeof(struct ranlib);
-	while (i < size)
-	{
+	i = get_size((void*)ptr + SARMAG);
+	offset_struct = (void*)ptr + sizeof(struct ar_hdr) + SARMAG + i;
+	ran = (void*)ptr + sizeof(struct ar_hdr) + SARMAG + i + sizeof(uint32_t);
+	size = (*((int *)offset_struct)) / sizeof(struct ranlib);
+	i = -1;
+	while (++i < size)
 		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
-		i++;
-	}
-	browse_ar(lst, ptr, name);
+	print_ar(lst, ptr, name);
 }

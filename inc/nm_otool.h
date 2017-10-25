@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 18:37:41 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 13:06:31 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include "../libft/inc/libft.h"
 # include "../libft/inc/ft_printf.h"
 
-struct stat			g_stat;
 int					g_data;
 int					g_bss;
 int					g_text;
@@ -59,7 +58,6 @@ int					loop_arg(char *av);
 ** DISPLAY
 */
 
-int					is_executable_file(void);
 char				type_n_sect(unsigned int n_sect, t_symtab *symt);
 char				get_type(uint32_t type, uint32_t n_sect, int value,
 	t_symtab *symt);
@@ -109,11 +107,10 @@ void				handle_32(char *ptr);
 ** ARCH_LIB
 */
 
-int					catch_size(char *name);
-char				*catch_name(char *name);
+int					get_size(char *name);
+char				*get_name(char *name);
 t_offlist			*add_off(t_offlist *lst, uint32_t off, uint32_t strx);
-void				print_ar(uint32_t off, char *ptr, char *file);
-void				browse_ar(t_offlist *lst, char *ptr, char *name);
+void				print_ar(t_offlist *lst, char *ptr, char *file);
 void				handle_lib(char *ptr, char *name);
 
 #endif
