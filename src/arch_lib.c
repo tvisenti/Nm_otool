@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 12:51:45 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:04:57 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_offlist		*add_off(t_offlist *lst, uint32_t off, uint32_t strx)
 	tmp2 = lst;
 	while (tmp2->next)
 		tmp2 = tmp2->next;
+	if (search_lst(lst, off))
+		return (lst);
 	tmp2->next = tmp;
 	return (lst);
 }
@@ -85,5 +87,5 @@ void			handle_lib(char *ptr, char *name)
 	i = -1;
 	while (++i < size)
 		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
-	print_ar(lst, ptr, name);
+	print_ar(order_off(lst), ptr, name);
 }

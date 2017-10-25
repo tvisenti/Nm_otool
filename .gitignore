@@ -12,6 +12,7 @@ ft_otool
 otool
 res/
 mine
+true
 original
 
 # Linker output

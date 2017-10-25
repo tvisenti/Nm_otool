@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 13:06:31 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:05:29 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,14 @@ void				display_output_64(struct nlist_64 elem, char *str,
 ** SORT
 */
 
+t_offlist			*order_off(t_offlist *lst);
 struct nlist		*fill_array(struct nlist *tab, int nsyms,
 	char *stringtable);
-struct nlist		*tri_bulle(char *stringtable, struct nlist *tab,
+struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
 	int nsyms);
 struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms,
 	char *stringtable);
-struct nlist_64		*tri_bulle_64(char *stringtable, struct nlist_64 *tab,
+struct nlist_64		*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 	int nsyms);
 
 /*
@@ -112,5 +113,11 @@ char				*get_name(char *name);
 t_offlist			*add_off(t_offlist *lst, uint32_t off, uint32_t strx);
 void				print_ar(t_offlist *lst, char *ptr, char *file);
 void				handle_lib(char *ptr, char *name);
+
+/*
+** UTILS
+*/
+
+int					search_lst(t_offlist *lst, uint32_t off);
 
 #endif

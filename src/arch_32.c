@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 13:03:37 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:01:07 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			print_output(struct symtab_command *sym,
 	lc = (void *)ptr + sizeof(*header);
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
-	array = tri_bulle(stringtable, array, sym->nsyms);
+	array = bubble_sort(stringtable, array, sym->nsyms);
 	symtab_building(&symt, header, lc);
 	while (++i < sym->nsyms)
 		display_output(array[i], stringtable + array[i].n_un.n_strx, &symt);

@@ -6,11 +6,38 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:19:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/23 17:41:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:05:18 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/nm_otool.h"
+
+t_offlist			*order_off(t_offlist *lst)
+{
+	t_offlist	*cur;
+	uint32_t	tmp;
+	int			stop;
+
+	cur = lst;
+	stop = 1;
+	while (stop)
+	{
+		stop = 0;
+		cur = lst;
+		while (cur->next)
+		{
+			if (cur->off > cur->next->off)
+			{
+				stop = 1;
+				tmp = cur->off;
+				cur->off = cur->next->off;
+				cur->next->off = tmp;
+			}
+			cur = cur->next;
+		}
+	}
+	return (lst);
+}
 
 struct nlist		*fill_array(struct nlist *tab, int nsyms, char *stringtable)
 {
@@ -24,7 +51,8 @@ struct nlist		*fill_array(struct nlist *tab, int nsyms, char *stringtable)
 	return (tab2);
 }
 
-struct nlist		*tri_bulle(char *stringtable, struct nlist *tab, int nsyms)
+struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
+	int nsyms)
 {
 	int				i;
 	int				j;
@@ -65,7 +93,7 @@ struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms,
 	return (tab2);
 }
 
-struct nlist_64		*tri_bulle_64(char *stringtable, struct nlist_64 *tab,
+struct nlist_64		*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 	int nsyms)
 {
 	int				i;

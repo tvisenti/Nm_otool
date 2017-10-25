@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/18 14:42:35 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/24 17:26:34 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/10/25 15:01:26 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRC =	ft_nm.c \
 		display.c \
 		arch_64.c \
 		arch_32.c \
-		arch_lib.c
+		arch_lib.c \
+		utils.c
 
 VPATH	= $(SRC_DIR)
 
