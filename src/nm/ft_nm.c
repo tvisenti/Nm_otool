@@ -6,14 +6,16 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 18:24:59 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 12:13:08 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
-t_symtab		init_symtab(t_symtab symt)
+t_symtab		init_symtab()
 {
+	t_symtab	symt;
+
 	symt.data = 0;
 	symt.bss = 0;
 	symt.text = 0;
@@ -24,16 +26,16 @@ t_symtab		init_symtab(t_symtab symt)
 int				print_error(char *file, char *str)
 {
 	ft_printf("ft_nm: %s: %s.\n", file, str);
-	exit (1);
+	exit(1);
 }
 
 void			ft_nm(void *ptr, char *file)
 {
-	int				magic_number;
+	unsigned int	magic_number;
 	struct ar_hdr	*ar;
 
 	ar = (void*)ptr;
-	magic_number = *(int *)ptr;
+	magic_number = *(unsigned int *)ptr;
 	if (magic_number == MH_MAGIC_64)
 		handle_64(ptr);
 	else if (magic_number == MH_MAGIC)

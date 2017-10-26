@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_otool.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/25 14:50:27 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 14:51:15 by tvisenti         ###   ########.fr       */
+/*   Created: 2017/10/26 10:44:41 by tvisenti          #+#    #+#             */
+/*   Updated: 2017/10/26 12:46:24 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
-int			search_lst(t_offlist *lst, uint32_t off)
+int		main(int ac, char **av)
 {
-	t_offlist	*cur;
-
-	cur = lst;
-	while (cur)
-	{
-		if (cur->off == off)
-			return (1);
-		cur = cur->next;
-	}
+	if (ac > 1)
+		ft_printf("av[1]: %s\n", av[1]);
 	return (0);
 }

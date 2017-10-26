@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 17:28:15 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 12:47:10 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int					g_text;
 
 typedef struct		s_symtab
 {
-	int				data;
-	int				bss;
-	int				text;
+	unsigned int	data;
+	unsigned int	bss;
+	unsigned int	text;
 	int				ns;
 }					t_symtab;
 
@@ -47,10 +47,18 @@ typedef struct			s_offlist
 int					ft_printf(const char *str, ...);
 
 /*
+** MAIN
+*/
+
+int					main(int ac, char **av);
+int					main_nm(int ac, char **av);
+int					main_otool(int ac, char **av);
+
+/*
 ** FT_NM
 */
 
-t_symtab			init_symtab(t_symtab symt);
+t_symtab			init_symtab();
 int					print_error(char *file, char *str);
 void				ft_nm(void *ptr, char *file);
 int					loop_arg(char *av);
@@ -72,12 +80,10 @@ void				display_output_64(struct nlist_64 elem, char *str,
 */
 
 t_offlist			*order_off(t_offlist *lst);
-struct nlist		*fill_array(struct nlist *tab, int nsyms,
-	char *stringtable);
+struct nlist		*fill_array(struct nlist *tab, int nsyms);
 struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
 	int nsyms);
-struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms,
-	char *stringtable);
+struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms);
 struct nlist_64		*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 	int nsyms);
 
@@ -85,8 +91,6 @@ struct nlist_64		*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 ** ARCH_64
 */
 
-static void			symtab_building_bis_64(t_symtab *symt,
-	struct segment_command_64 *seg, struct section_64 *sect);
 void				symtab_building_64(t_symtab *symt,
 	struct mach_header_64 *header, struct load_command *lc);
 void				print_output_64(struct symtab_command *sym,
@@ -97,8 +101,6 @@ void				handle_64(char *ptr);
 ** ARCH_32
 */
 
-static void			symtab_building_bis(t_symtab *symt,
-	struct segment_command *seg, struct section *sect);
 void				symtab_building(t_symtab *symt,
 	struct mach_header *header, struct load_command *lc);
 void				print_output(struct symtab_command *sym,
@@ -119,13 +121,17 @@ void				handle_lib(char *ptr, char *name);
 ** ARCH_FAT
 */
 
-uint32_t		swap_uint32(uint32_t val);
-void			handle_fat(char *ptr);
+uint32_t			swap_uint32(uint32_t val);
+void				handle_fat(char *ptr);
 
 /*
 ** UTILS
 */
 
 int					search_lst(t_offlist *lst, uint32_t off);
+
+/*
+** FT_OTOOL
+*/
 
 #endif

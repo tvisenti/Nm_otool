@@ -6,16 +6,16 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:07:11 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 16:05:27 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 11:44:19 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
 uint32_t		swap_uint32(uint32_t val)
 {
-    val = ((val << 8) & 0xFF00FF00 ) | ((val >> 8) & 0xFF00FF );
-    return (val << 16) | (val >> 16);
+	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
+	return (val << 16) | (val >> 16);
 }
 
 void			handle_fat(char *ptr)

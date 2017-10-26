@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:19:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 15:05:18 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 12:09:31 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
 t_offlist			*order_off(t_offlist *lst)
 {
@@ -39,7 +39,7 @@ t_offlist			*order_off(t_offlist *lst)
 	return (lst);
 }
 
-struct nlist		*fill_array(struct nlist *tab, int nsyms, char *stringtable)
+struct nlist		*fill_array(struct nlist *tab, int nsyms)
 {
 	int				i;
 	struct nlist	*tab2;
@@ -60,7 +60,7 @@ struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
 	struct nlist	temp;
 
 	i = 0;
-	new_tab = fill_array(tab, nsyms, stringtable);
+	new_tab = fill_array(tab, nsyms);
 	while (i < nsyms)
 	{
 		j = 0;
@@ -80,8 +80,7 @@ struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
 	return (new_tab);
 }
 
-struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms,
-	char *stringtable)
+struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms)
 {
 	int				i;
 	struct nlist_64	*tab2;
@@ -102,7 +101,7 @@ struct nlist_64		*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 	struct nlist_64	temp;
 
 	i = 0;
-	new_tab = fill_array_64(tab, nsyms, stringtable);
+	new_tab = fill_array_64(tab, nsyms);
 	while (i < nsyms)
 	{
 		j = 0;

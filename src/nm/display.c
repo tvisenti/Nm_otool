@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 17:22:50 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 11:11:51 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
 char			type_n_sect(unsigned int n_sect, t_symtab *symt)
 {
@@ -52,6 +52,8 @@ void			display_output(struct nlist elem, char *str, t_symtab *symt)
 	char		c;
 
 	c = get_type(elem.n_type, elem.n_sect, elem.n_value, symt);
+	if (ft_strcmp("radr://5614542", str) == 0)
+		return ;
 	if (elem.n_value == 0 && (c == 'U' || c == 'u'))
 	{
 		if (ft_strcmp("__mh_execute_header", str) == 0)

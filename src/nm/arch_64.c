@@ -6,19 +6,19 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 17:13:06 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 12:19:07 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
 static void		symtab_building_bis_64(t_symtab *symt,
 	struct segment_command_64 *seg, struct section_64 *sect)
 {
-	int			i;
+	uint32_t	i;
 
-	i = -1;
-	while (++i < seg->nsects)
+	i = 0;
+	while (i < seg->nsects)
 	{
 		if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
 		ft_strcmp(sect->segname, SEG_TEXT) == 0)
@@ -31,18 +31,19 @@ static void		symtab_building_bis_64(t_symtab *symt,
 			symt->bss = symt->ns;
 		sect = (void *)sect + sizeof(*sect);
 		symt->ns++;
+		i++;
 	}
 }
 
 void			symtab_building_64(t_symtab *symt,
 	struct mach_header_64 *header, struct load_command *lc)
 {
-	int							i;
+	uint32_t					i;
 	struct segment_command_64	*seg;
 	struct section_64			*sect;
 
-	i = -1;
-	while (++i < header->ncmds)
+	i = 0;
+	while (i < header->ncmds)
 	{
 		if (lc->cmd == LC_SEGMENT_64)
 		{
@@ -51,58 +52,62 @@ void			symtab_building_64(t_symtab *symt,
 			symtab_building_bis_64(symt, seg, sect);
 		}
 		lc = (void *)lc + lc->cmdsize;
+		i++;
 	}
 }
 
-static void    sort_duplicate_strx_by_value_64(struct nlist_64 *array, char *stringtable, struct load_command *lc, uint32_t size)
+static void		sort_duplicate_strx_by_value_64(struct nlist_64 *array,
+	char *stringtable, uint32_t size)
 {
-    uint64_t        tmp_value;
-    int                sorted;
-    int                increment;
+	uint64_t		tmp_value;
+	int				sorted;
+	int				increment;
 
-    sorted = 0;
-    tmp_value = 0;
-    increment = 0;
-    while (!sorted)
-    {
-        sorted = 1;
-        increment = 0;
-        while (increment < size - 1)
-        {
-            if (ft_strcmp(stringtable + array[increment].n_un.n_strx, stringtable + array[increment + 1].n_un.n_strx) == 0)
-            {
-                if (array[increment].n_value > array[increment + 1].n_value)
-                {
-                    tmp_value = array[increment + 1].n_value;
-                    array[increment + 1].n_value = array[increment].n_value;
-                    array[increment].n_value = tmp_value;
-                    sorted = 0;
-                }
-            }
-            ++increment;
-        }
-    }
+	sorted = 0;
+	tmp_value = 0;
+	while (!sorted)
+	{
+		sorted = 1;
+		increment = -1;
+		while ((uint32_t)++increment < size - 1)
+		{
+			if (ft_strcmp(stringtable + array[increment].n_un.n_strx,
+				stringtable + array[increment + 1].n_un.n_strx) == 0)
+			{
+				if (array[increment].n_value > array[increment + 1].n_value)
+				{
+					tmp_value = array[increment + 1].n_value;
+					array[increment + 1].n_value = array[increment].n_value;
+					array[increment].n_value = tmp_value;
+					sorted = 0;
+				}
+			}
+		}
+	}
 }
 
 void			print_output_64(struct symtab_command *sym,
 	struct mach_header_64 *header, char *ptr)
 {
-	int					i;
+	uint32_t			i;
 	struct load_command	*lc;
 	char				*stringtable;
 	struct nlist_64		*array;
 	t_symtab			symt;
 
-	symt = init_symtab(symt);
-	i = -1;
+	symt = init_symtab();
+	i = 0;
 	lc = (void *)ptr + sizeof(*header);
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
 	array = bubble_sort_64(stringtable, array, sym->nsyms);
-	sort_duplicate_strx_by_value_64(array, stringtable, lc, sym->nsyms);
+	sort_duplicate_strx_by_value_64(array, stringtable, sym->nsyms);
 	symtab_building_64(&symt, header, lc);
-	while (++i < sym->nsyms)
+	while (i < sym->nsyms)
+	{
 		display_output_64(array[i], stringtable + array[i].n_un.n_strx, &symt);
+		i++;
+	}
 }
 
 void			handle_64(char *ptr)

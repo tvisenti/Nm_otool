@@ -6,10 +6,8 @@
 *.ko
 *.obj
 *.elf
-nm
 ft_nm
 ft_otool
-otool
 res/
 mine
 true

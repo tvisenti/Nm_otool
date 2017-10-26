@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/25 17:35:11 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 11:11:57 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/nm_otool.h"
+#include "nm_otool.h"
 
 int				get_size(char *name)
 {
