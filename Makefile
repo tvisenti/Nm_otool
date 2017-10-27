@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/18 14:42:35 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/26 16:22:29 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/10/27 14:18:45 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRC_DIR_NM =		./src/nm
 SRC_DIR_OTOOL =	 	./src/otool
 
 HEADERS =			-I./inc
+INC_NM =			./inc/ft_nm.h
+INC_OTOOL =			./inc/ft_otool.h
 
 OBJ_DIR_NM = 		./obj_nm
 OBJ_DIR_OTOOL = 	./obj_otool
@@ -95,6 +97,6 @@ re: fclean all
 norme:
 	@make norme -C libft
 	@echo "\033[1;34mNm_otool\t\033[1;33mNorminette\t\033[0;32m-OK-\033[0m"
-	@norminette $(SRC_PATH_NM) $(SRC_PATH_OTOOL)
+	@norminette $(SRC_PATH_NM) $(SRC_PATH_OTOOL) $(INC_NM) $(INC_OTOOL)
 
 .PHONY: re fclean clean all norme res

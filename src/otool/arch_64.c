@@ -6,13 +6,13 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 12:23:47 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 14:05:59 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
 
-static void		symtab_building_bis_64(t_symtab *symt, struct segment_command_64
+static void		symtab_building_bis_64(struct segment_command_64
 	*seg, struct section_64 *sect, struct mach_header_64 *header)
 {
 	uint32_t	i;
@@ -20,28 +20,30 @@ static void		symtab_building_bis_64(t_symtab *symt, struct segment_command_64
 	i = 0;
 	while (i < seg->nsects)
 	{
-		if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
-		ft_strcmp(sect->segname, SEG_TEXT) == 0)
+		if (g_bonus_otool == 0)
 		{
-			print_section(sect->addr, sect->size,
-				(char *)header + sect->offset,
-				"Contents of (__TEXT,__text) section");
-			symt->text = symt->ns;
+			if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
+			ft_strcmp(sect->segname, SEG_TEXT) == 0)
+			{
+				print_section(sect->addr, sect->size,
+					(char *)header + sect->offset,
+					"Contents of (__TEXT,__text) section");
+			}
 		}
 		else if (ft_strcmp(sect->sectname, SECT_DATA) == 0 &&
 		ft_strcmp(sect->segname, SEG_DATA) == 0)
-			symt->data = symt->ns;
-		else if (ft_strcmp(sect->sectname, SECT_BSS) == 0 &&
-		ft_strcmp(sect->segname, SEG_DATA) == 0)
-			symt->bss = symt->ns;
+		{
+			print_section(sect->addr, sect->size,
+				(char *)header + sect->offset,
+				"Contents of (__DATA,__data) section");
+		}
 		sect = (void *)sect + sizeof(*sect);
-		symt->ns++;
 		i++;
 	}
 }
 
-void			symtab_building_64(t_symtab *symt,
-	struct mach_header_64 *header, struct load_command *lc)
+void			symtab_building_64(struct mach_header_64 *header,
+	struct load_command *lc)
 {
 	uint32_t					i;
 	struct segment_command_64	*seg;
@@ -54,7 +56,7 @@ void			symtab_building_64(t_symtab *symt,
 		{
 			seg = (struct segment_command_64 *)lc;
 			sect = (struct section_64 *)((void *)seg + sizeof(*seg));
-			symtab_building_bis_64(symt, seg, sect, header);
+			symtab_building_bis_64(seg, sect, header);
 		}
 		lc = (void *)lc + lc->cmdsize;
 		i++;
@@ -98,16 +100,14 @@ void			print_output_64(struct symtab_command *sym,
 	struct load_command	*lc;
 	char				*stringtable;
 	struct nlist_64		*array;
-	t_symtab			symt;
 
-	symt = init_symtab();
 	i = 0;
 	lc = (void *)ptr + sizeof(*header);
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
 	array = bubble_sort_64(stringtable, array, sym->nsyms);
 	sort_duplicate_strx_by_value_64(array, stringtable, sym->nsyms);
-	symtab_building_64(&symt, header, lc);
+	symtab_building_64(header, lc);
 }
 
 void			handle_64(char *ptr, char *file, int display)

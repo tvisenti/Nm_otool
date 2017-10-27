@@ -6,22 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:44:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 13:34:58 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 14:08:54 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
-
-t_symtab		init_symtab(void)
-{
-	t_symtab	symt;
-
-	symt.data = 0;
-	symt.bss = 0;
-	symt.text = 0;
-	symt.ns = 1;
-	return (symt);
-}
 
 int				print_error(char *av, char *str)
 {
@@ -75,10 +64,17 @@ int				main(int ac, char **av)
 	i = 0;
 	if (ac > 1)
 	{
+		if (ft_strcmp(av[1], "-d") == 0)
+		{
+			g_bonus_otool = 1;
+			i++;
+		}
+		else
+			g_bonus_otool = 0;
 		while (av[++i])
 			loop_arg_otool(av[i]);
 	}
 	else
-		print_error("av", "-t and argument are missing");
+		print_error("[-d]", "<file .o / .a>");
 	return (0);
 }

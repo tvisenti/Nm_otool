@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 12:31:28 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 14:11:23 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void			ft_nm(void *ptr, char *file)
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
 		handle_fat(ptr, magic_number);
 	else
-		return;
+		print_error(file, "The file was not recognized as a valid object file");
 }
 
 int				loop_arg(char *av)
