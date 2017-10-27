@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 09:06:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/24 18:11:11 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 10:54:55 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(unsigned long long value, int base);
 char				*ft_itoa_base_maj(unsigned long long value, int base);
+char				*ft_itoa_base_sub(int val, int base, int output_size);
 
 void				ft_putchar(char c);
 void				ft_putstr(char const *s);

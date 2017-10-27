@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:07:11 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 15:56:17 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 12:02:28 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
 uint32_t		swap_uint32(uint32_t val, unsigned int magic_number)
 {
@@ -38,5 +38,5 @@ void			handle_fat(char *ptr, unsigned int magic_number)
 		arch += sizeof(arch) / sizeof(void*);
 		i--;
 	}
-	ft_nm(ptr + swap_uint32(offset, magic_number), NULL);
+	ft_otool(ptr + swap_uint32(offset, magic_number), NULL, 0);
 }

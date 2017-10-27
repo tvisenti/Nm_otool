@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 10:24:00 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 12:00:40 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
 int				get_size(char *name)
 {
@@ -60,13 +60,14 @@ void			print_ar(t_offlist *lst, char *ptr, char *file)
 	char			*name;
 
 	tmp = lst;
+	ft_printf("Archive : %s\n", file);
 	while (tmp)
 	{
 		arch = (void*)ptr + tmp->off;
 		name = get_name(arch->ar_name);
 		size_name = get_size(arch->ar_name);
-		ft_printf("\n%s(%s):\n", file, name);
-		ft_nm((void*)arch + sizeof(*arch) + size_name, file);
+		ft_printf("%s(%s):\n", file, name);
+		ft_otool((void*)arch + sizeof(*arch) + size_name, file, 0);
 		tmp = tmp->next;
 	}
 }

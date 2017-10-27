@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 11:11:51 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 16:55:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
+#include "ft_nm.h"
 
 char			type_n_sect(unsigned int n_sect, t_symtab *symt)
 {

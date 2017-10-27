@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 12:19:07 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 15:56:17 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
+#include "ft_nm.h"
 
 static void		symtab_building_bis_64(t_symtab *symt,
 	struct segment_command_64 *seg, struct section_64 *sect)

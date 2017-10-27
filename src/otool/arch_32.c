@@ -6,14 +6,14 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 15:59:25 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 12:23:57 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
-static void		symtab_building_bis(t_symtab *symt,
-	struct segment_command *seg, struct section *sect)
+static void		symtab_building_bis(t_symtab *symt, struct segment_command *seg,
+	struct section *sect, struct mach_header *header)
 {
 	uint32_t	i;
 
@@ -22,7 +22,12 @@ static void		symtab_building_bis(t_symtab *symt,
 	{
 		if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
 		ft_strcmp(sect->segname, SEG_TEXT) == 0)
+		{
+			print_section(sect->addr, sect->size,
+				(char *)header + sect->offset,
+				"Contents of (__TEXT,__text) section");
 			symt->text = symt->ns;
+		}
 		else if (ft_strcmp(sect->sectname, SECT_DATA) == 0 &&
 		ft_strcmp(sect->segname, SEG_DATA) == 0)
 			symt->data = symt->ns;
@@ -49,7 +54,7 @@ void			symtab_building(t_symtab *symt,
 		{
 			seg = (struct segment_command *)lc;
 			sect = (struct section *)((void *)seg + sizeof(*seg));
-			symtab_building_bis(symt, seg, sect);
+			symtab_building_bis(symt, seg, sect, header);
 		}
 		lc = (void *)lc + lc->cmdsize;
 		i++;
@@ -103,14 +108,9 @@ void			print_output(struct symtab_command *sym,
 	array = bubble_sort(stringtable, array, sym->nsyms);
 	sort_duplicate_strx_by_value(array, stringtable, sym->nsyms);
 	symtab_building(&symt, header, lc);
-	while (i < sym->nsyms)
-	{
-		display_output(array[i], stringtable + array[i].n_un.n_strx, &symt);
-		i++;
-	}
 }
 
-void			handle_32(char *ptr)
+void			handle_32(char *ptr, char *file, int display)
 {
 	int						i;
 	int						ncmds;
@@ -127,6 +127,8 @@ void			handle_32(char *ptr)
 		if (lc->cmd == LC_SYMTAB)
 		{
 			sym = (struct symtab_command *)lc;
+			if (display)
+				ft_printf("%s:\n", file);
 			print_output(sym, header, ptr);
 			break ;
 		}

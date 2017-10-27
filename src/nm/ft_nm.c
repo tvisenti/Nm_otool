@@ -6,13 +6,13 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 12:13:08 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 16:05:53 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "nm_otool.h"
+#include "ft_nm.h"
 
-t_symtab		init_symtab()
+t_symtab		init_symtab(void)
 {
 	t_symtab	symt;
 
@@ -43,7 +43,7 @@ void			ft_nm(void *ptr, char *file)
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
 		handle_lib(ptr, file);
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-		handle_fat(ptr);
+		handle_fat(ptr, magic_number);
 	else
 		print_error(file, "The file was not recognized as a valid object file");
 }

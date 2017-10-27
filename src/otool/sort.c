@@ -6,11 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:19:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 12:09:31 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 16:02:44 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
 t_offlist			*order_off(t_offlist *lst)
 {

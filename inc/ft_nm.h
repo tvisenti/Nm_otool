@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nm_otool.h                                         :+:      :+:    :+:   */
+/*   ft_nm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 12:47:10 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/26 16:12:52 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NM_OTOOL_H
-# define NM_OTOOL_H
+#ifndef FT_NM_H
+# define FT_NM_H
 
 # include <sys/mman.h>
 # include <mach-o/loader.h>
@@ -47,18 +47,10 @@ typedef struct			s_offlist
 int					ft_printf(const char *str, ...);
 
 /*
-** MAIN
-*/
-
-int					main(int ac, char **av);
-int					main_nm(int ac, char **av);
-int					main_otool(int ac, char **av);
-
-/*
 ** FT_NM
 */
 
-t_symtab			init_symtab();
+t_symtab			init_symtab(void);
 int					print_error(char *file, char *str);
 void				ft_nm(void *ptr, char *file);
 int					loop_arg(char *av);
@@ -121,17 +113,13 @@ void				handle_lib(char *ptr, char *name);
 ** ARCH_FAT
 */
 
-uint32_t			swap_uint32(uint32_t val);
-void				handle_fat(char *ptr);
+uint32_t			swap_uint32(uint32_t val, unsigned int magic_number);
+void				handle_fat(char *ptr, unsigned int magic_number);
 
 /*
 ** UTILS
 */
 
 int					search_lst(t_offlist *lst, uint32_t off);
-
-/*
-** FT_OTOOL
-*/
 
 #endif
