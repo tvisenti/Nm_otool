@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 16:05:53 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 12:31:28 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_symtab		init_symtab(void)
 int				print_error(char *file, char *str)
 {
 	ft_printf("ft_nm: %s: %s.\n", file, str);
-	exit(1);
+	return (0);
 }
 
 void			ft_nm(void *ptr, char *file)
@@ -45,7 +45,7 @@ void			ft_nm(void *ptr, char *file)
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
 		handle_fat(ptr, magic_number);
 	else
-		print_error(file, "The file was not recognized as a valid object file");
+		return;
 }
 
 int				loop_arg(char *av)

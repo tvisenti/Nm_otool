@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:07:11 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 12:02:28 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 13:37:32 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ uint32_t		swap_uint32(uint32_t val, unsigned int magic_number)
 	return (val << 16) | (val >> 16);
 }
 
-void			handle_fat(char *ptr, unsigned int magic_number)
+void			handle_fat(char *ptr, unsigned int magic_number, char *file)
 {
 	struct fat_header	*fat;
 	struct fat_arch		*arch;
@@ -31,6 +31,7 @@ void			handle_fat(char *ptr, unsigned int magic_number)
 	i = fat->nfat_arch;
 	i = swap_uint32(i, magic_number);
 	arch = (void*)ptr + sizeof(fat);
+	ft_printf("%s:\n", file);
 	while (i)
 	{
 		if (swap_uint32(arch->cputype, magic_number) == CPU_TYPE_X86_64)

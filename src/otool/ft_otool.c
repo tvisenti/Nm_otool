@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:44:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 12:23:22 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 13:34:58 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_symtab		init_symtab(void)
 int				print_error(char *av, char *str)
 {
 	ft_printf("ft_otool: %s: %s\n", av, str);
-	exit(1);
+	return (0);
 }
 
 int				ft_otool(char *ptr, char *file, int display)
@@ -43,7 +43,7 @@ int				ft_otool(char *ptr, char *file, int display)
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
 		handle_lib(ptr, file);
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-		handle_fat(ptr, magic_number);
+		handle_fat(ptr, magic_number, file);
 	else
 		print_error(file, "The file was not recognized as a valid object file");
 	return (0);
@@ -72,14 +72,11 @@ int				main(int ac, char **av)
 {
 	int	i;
 
-	i = 1;
-	if (ac > 2)
+	i = 0;
+	if (ac > 1)
 	{
-		if (ft_strcmp(av[1], "-t") == 0)
-		{
-			while (av[++i])
-				loop_arg_otool(av[i]);
-		}
+		while (av[++i])
+			loop_arg_otool(av[i]);
 	}
 	else
 		print_error("av", "-t and argument are missing");

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 12:03:16 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 13:35:21 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ void				handle_lib(char *ptr, char *name);
 */
 
 uint32_t			swap_uint32(uint32_t val, unsigned int magic_number);
-void				handle_fat(char *ptr, unsigned int magic_number);
+void				handle_fat(char *ptr, unsigned int magic_number,
+	char *file);
 
 /*
 ** UTILS
