@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 16:12:22 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:41:26 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@
 # include "../libft/inc/libft.h"
 # include "../libft/inc/ft_printf.h"
 
-int						g_data;
-int						g_bss;
-int						g_text;
 int						g_bonus_nm;
 
 typedef struct			s_symtab
