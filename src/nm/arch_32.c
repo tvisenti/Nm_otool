@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 16:19:08 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:17:50 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,10 @@ void			print_output(struct symtab_command *sym,
 	lc = (void *)ptr + sizeof(*header);
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
-	array = bubble_sort(stringtable, array, sym->nsyms);
+	if (g_bonus_nm == 1)
+		array = fill_array(array, sym->nsyms);
+	else
+		array = bubble_sort(stringtable, array, sym->nsyms);
 	sort_duplicate_strx_by_value(array, stringtable, sym->nsyms);
 	symtab_building(&symt, header, lc);
 	display_loop(array, stringtable, symt, sym);

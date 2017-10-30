@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 14:50:27 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 16:30:11 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:18:23 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			search_lst(t_offlist *lst, uint32_t off)
 }
 
 /*
-** n = Sort numerically rather than alphabetically.
+** p = Don't sort; display in symbol-table order.
 ** r = Sort in reverse order.
 ** u = Display only undefined symbols.
 ** U = Don't display undefined symbols.
@@ -70,7 +70,7 @@ int			search_lst(t_offlist *lst, uint32_t off)
 
 void		check_bonus(char *bonus)
 {
-	if (ft_strcmp(bonus, "-n") == 0)
+	if (ft_strcmp(bonus, "-p") == 0)
 		g_bonus_nm = 1;
 	else if (ft_strcmp(bonus, "-r") == 0)
 		g_bonus_nm = 2;

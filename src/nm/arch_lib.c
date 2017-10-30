@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 10:24:00 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:15:14 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,8 @@ void			handle_lib(char *ptr, char *name)
 	i = -1;
 	while (++i < size)
 		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);
-	print_ar(order_off(lst), ptr, name);
+	if (g_bonus_nm == 1)
+		print_ar(lst, ptr, name);
+	else
+		print_ar(order_off(lst), ptr, name);
 }
