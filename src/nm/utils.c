@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 14:50:27 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/30 11:18:23 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 11:21:52 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int			search_lst(t_offlist *lst, uint32_t off)
 ** r = Sort in reverse order.
 ** u = Display only undefined symbols.
 ** U = Don't display undefined symbols.
+** j = Just display the symbol names (no value or type).
 */
 
 void		check_bonus(char *bonus)
@@ -78,6 +79,8 @@ void		check_bonus(char *bonus)
 		g_bonus_nm = 3;
 	else if (ft_strcmp(bonus, "-U") == 0)
 		g_bonus_nm = 4;
+	else if (ft_strcmp(bonus, "-j") == 0)
+		g_bonus_nm = 5;
 	else
 		g_bonus_nm = 0;
 }
