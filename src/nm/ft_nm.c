@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/30 09:27:24 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 13:21:03 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ int				main(int ac, char **av)
 		check_bonus(av[1]);
 	while (i < ac)
 	{
+		if (((ac == 3 && g_bonus_nm == 0) || ac > 3) &&
+		(av[i][ft_strlen(av[i]) - 1] != 'a'))
+			ft_printf("\n%s:\n", av[i]);
 		str = av[i];
 		loop_arg(str);
 		i++;
