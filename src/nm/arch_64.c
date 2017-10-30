@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 15:56:17 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 16:29:47 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,7 @@ void			print_output_64(struct symtab_command *sym,
 	array = bubble_sort_64(stringtable, array, sym->nsyms);
 	sort_duplicate_strx_by_value_64(array, stringtable, sym->nsyms);
 	symtab_building_64(&symt, header, lc);
-	while (i < sym->nsyms)
-	{
-		display_output_64(array[i], stringtable + array[i].n_un.n_strx, &symt);
-		i++;
-	}
+	display_loop_64(array, stringtable, symt, sym);
 }
 
 void			handle_64(char *ptr)

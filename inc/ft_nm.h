@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 14:19:46 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/27 16:12:22 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ int						loop_arg(char *av);
 ** DISPLAY
 */
 
-char					type_n_sect(unsigned int n_sect, t_symtab *symt);
-char					get_type(uint32_t type, uint32_t n_sect, int value,
-	t_symtab *symt);
 void					display_output(struct nlist elem, char *str,
 	t_symtab *symt);
 void					display_output_64(struct nlist_64 elem, char *str,
 	t_symtab *symt);
+void					display_loop_64(struct nlist_64 *array,
+	char *stringtable, t_symtab symt, struct symtab_command *sym);
+void					display_loop(struct nlist *array, char *stringtable,
+	t_symtab symt, struct symtab_command *sym);
 
 /*
 ** SORT
@@ -121,6 +122,10 @@ void					handle_fat(char *ptr, unsigned int magic_number);
 ** UTILS
 */
 
+char					type_n_sect(unsigned int n_sect, t_symtab *symt);
+char					get_type(uint32_t type, uint32_t n_sect, int value,
+	t_symtab *symt);
 int						search_lst(t_offlist *lst, uint32_t off);
+void					check_bonus(char *bonus);
 
 #endif

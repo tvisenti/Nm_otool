@@ -6,46 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 16:55:50 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/30 09:24:49 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
-
-char			type_n_sect(unsigned int n_sect, t_symtab *symt)
-{
-	if (n_sect == symt->text)
-		return ('T');
-	if (n_sect == symt->data)
-		return ('D');
-	if (n_sect == symt->bss)
-		return ('B');
-	return ('S');
-}
-
-char			get_type(uint32_t type, uint32_t n_sect, int value,
-	t_symtab *symt)
-{
-	char		c;
-
-	c = type;
-	if (c & N_STAB)
-		return ('-');
-	c = c & N_TYPE;
-	if (c == N_UNDF && value != 0)
-		c = 'C';
-	else if ((c == N_UNDF && value == 0) || c == N_PBUD)
-		c = 'U';
-	else if (c == N_ABS)
-		c = 'A';
-	else if (c == N_SECT)
-		c = type_n_sect(n_sect, symt);
-	else
-		c = (c == N_INDR ? 'I' : '?');
-	if (!(type & N_EXT))
-		c = ft_tolower(c);
-	return (c);
-}
 
 void			display_output(struct nlist elem, char *str, t_symtab *symt)
 {
@@ -82,4 +47,44 @@ void			display_output_64(struct nlist_64 elem, char *str,
 	}
 	else
 		ft_printf("%016llx %c %s\n", elem.n_value, c, str);
+}
+
+void			display_loop(struct nlist *array, char *stringtable,
+	t_symtab symt, struct symtab_command *sym)
+{
+	long long	i;
+
+	i = -1;
+	if (g_bonus_nm == 2)
+	{
+		i = sym->nsyms;
+		while (--i >= 0)
+			display_output(array[i], stringtable + array[i].n_un.n_strx, &symt);
+	}
+	else
+	{
+		while (++i < sym->nsyms)
+			display_output(array[i], stringtable + array[i].n_un.n_strx, &symt);
+	}
+}
+
+void			display_loop_64(struct nlist_64 *array, char *stringtable,
+	t_symtab symt, struct symtab_command *sym)
+{
+	long long	i;
+
+	i = -1;
+	if (g_bonus_nm == 2)
+	{
+		i = sym->nsyms;
+		while (--i >= 0)
+			display_output_64(array[i], stringtable + array[i].n_un.n_strx,
+				&symt);
+	}
+	else
+	{
+		while (++i < sym->nsyms)
+			display_output_64(array[i], stringtable + array[i].n_un.n_strx,
+				&symt);
+	}
 }
