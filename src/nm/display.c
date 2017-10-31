@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 13:21:09 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/30 11:24:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:50:02 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void			display_output(struct nlist elem, char *str, t_symtab *symt)
 	char		c;
 
 	c = get_type(elem.n_type, elem.n_sect, elem.n_value, symt);
-	if (ft_strcmp("radr://5614542", str) == 0)
+	if (ft_strcmp("radr://5614542", str) == 0 || c == '-')
 		return ;
 	if (g_bonus_nm == 5)
 		ft_printf("%s\n", str);
@@ -48,9 +48,9 @@ void			display_output_64(struct nlist_64 elem, char *str,
 	char		c;
 
 	c = get_type(elem.n_type, elem.n_sect, elem.n_value, symt);
-	if (ft_strcmp("radr://5614542", str) == 0)
+	if (ft_strcmp("radr://5614542", str) == 0 || c == '-')
 		return ;
-	if (g_bonus_nm == 5)
+	else if (g_bonus_nm == 5)
 		ft_printf("%s\n", str);
 	else if (g_bonus_nm != 4 && elem.n_value == 0 && (c == 'U' || c == 'u'))
 	{
@@ -103,4 +103,10 @@ void			display_loop_64(struct nlist_64 *array, char *stringtable,
 			display_output_64(array[i], stringtable + array[i].n_un.n_strx,
 				&symt);
 	}
+}
+
+void			print_error(char *file, char *str)
+{
+	ft_printf("ft_nm: %s: %s.\n", file, str);
+	return ;
 }

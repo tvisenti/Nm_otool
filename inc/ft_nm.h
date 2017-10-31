@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 14:59:36 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:27:21 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,14 @@ typedef struct			s_offlist
 	struct s_offlist	*next;
 }						t_offlist;
 
-int						ft_printf(const char *str, ...);
-
 /*
 ** FT_NM
 */
 
+int						check_range_addr(void *ptr);
 t_symtab				init_symtab(void);
-int						print_error(char *file, char *str);
 void					ft_nm(void *ptr, char *file);
-int						loop_arg(char *av);
+void					loop_arg(char *av);
 
 /*
 ** DISPLAY
@@ -68,18 +66,19 @@ void					display_loop_64(struct nlist_64 *array,
 	char *stringtable, t_symtab symt, struct symtab_command *sym);
 void					display_loop(struct nlist *array, char *stringtable,
 	t_symtab symt, struct symtab_command *sym);
+void					print_error(char *file, char *str);
 
 /*
 ** SORT
 */
 
 t_offlist				*order_off(t_offlist *lst);
-struct nlist			*fill_array(struct nlist *tab, int nsyms);
+struct nlist			*fill_array(struct nlist *tab, uint32_t nsyms);
 struct nlist			*bubble_sort(char *stringtable, struct nlist *tab,
-	int nsyms);
-struct nlist_64			*fill_array_64(struct nlist_64 *tab, int nsyms);
+	uint32_t nsyms);
+struct nlist_64			*fill_array_64(struct nlist_64 *tab, uint32_t nsyms);
 struct nlist_64			*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
-	int nsyms);
+	uint32_t nsyms);
 
 /*
 ** ARCH_64

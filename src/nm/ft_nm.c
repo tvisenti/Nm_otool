@@ -6,11 +6,18 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 14:58:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:46:47 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
+
+int				check_range_addr(void *ptr)
+{
+	if (ptr <= (g_buff_addr + g_buff_size))
+		return (0);
+	return (1);
+}
 
 t_symtab		init_symtab(void)
 {
@@ -23,12 +30,6 @@ t_symtab		init_symtab(void)
 	return (symt);
 }
 
-int				print_error(char *file, char *str)
-{
-	ft_printf("ft_nm: %s: %s.\n", file, str);
-	return (0);
-}
-
 void			ft_nm(void *ptr, char *file)
 {
 	unsigned int	magic_number;
@@ -37,19 +38,19 @@ void			ft_nm(void *ptr, char *file)
 	ar = (void*)ptr;
 	magic_number = *(unsigned int *)ptr;
 	set_architecture(magic_number);
-	if (magic_number == MH_MAGIC_64)
+	if (!ft_strncmp(ptr, ARMAG, SARMAG))
+		handle_lib(ptr, file);
+	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
+		handle_fat(ptr, file);
+	else if (magic_number == MH_MAGIC_64)
 		handle_64(ptr);
 	else if (magic_number == MH_MAGIC)
 		handle_32(ptr);
-	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
-		handle_lib(ptr, file);
-	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-		handle_fat(ptr, magic_number);
 	else
 		print_error(file, "The file was not recognized as a valid object file");
 }
 
-int				loop_arg(char *av)
+void			loop_arg(char *av)
 {
 	struct stat	buf;
 	int			fd;
@@ -67,7 +68,6 @@ int				loop_arg(char *av)
 	ft_nm(ptr, av);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (print_error(av, "Error with munmap"));
-	return (1);
 }
 
 int				main(int ac, char **av)

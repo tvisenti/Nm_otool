@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:19:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 14:43:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 16:44:16 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,26 @@ t_offlist			*order_off(t_offlist *lst)
 	return (lst);
 }
 
-struct nlist		*fill_array(struct nlist *tab, int nsyms)
+struct nlist		*fill_array(struct nlist *tab, uint32_t nsyms)
 {
-	int				i;
+	uint32_t		i;
 	struct nlist	*tab2;
 
 	tab2 = (struct nlist*)malloc(sizeof(struct nlist) * nsyms);
-	i = -1;
-	while (++i < nsyms)
+	i = 0;
+	while (i < nsyms)
+	{
 		tab2[i] = tab[i];
+		i++;
+	}
 	return (tab2);
 }
 
 struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
-	int nsyms)
+	uint32_t nsyms)
 {
-	int				i;
-	int				j;
+	uint32_t		i;
+	uint32_t		j;
 	struct nlist	*new_tab;
 	struct nlist	temp;
 
@@ -80,23 +83,26 @@ struct nlist		*bubble_sort(char *stringtable, struct nlist *tab,
 	return (new_tab);
 }
 
-struct nlist_64		*fill_array_64(struct nlist_64 *tab, int nsyms)
+struct nlist_64		*fill_array_64(struct nlist_64 *tab, uint32_t nsyms)
 {
-	int				i;
+	uint32_t		i;
 	struct nlist_64	*tab2;
 
 	tab2 = (struct nlist_64*)malloc(sizeof(struct nlist_64) * nsyms);
-	i = -1;
-	while (++i < nsyms)
+	i = 0;
+	while (i < nsyms)
+	{
 		tab2[i] = tab[i];
+		i++;
+	}
 	return (tab2);
 }
 
 struct nlist_64		*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
-	int nsyms)
+	uint32_t nsyms)
 {
-	int				i;
-	int				j;
+	uint32_t		i;
+	uint32_t		j;
 	struct nlist_64	*new_tab;
 	struct nlist_64	temp;
 

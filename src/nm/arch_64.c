@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/30 11:18:05 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 17:46:41 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ void			print_output_64(struct symtab_command *sym,
 	lc = (void *)ptr + sizeof(*header);
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
+	if (check_range_addr(array) || check_range_addr(stringtable) ||
+	check_range_addr(lc))
+		return (print_error("file", "truncated or malformed object"));
 	if (g_bonus_nm == 1)
 		array = fill_array_64(array, sym->nsyms);
 	else
