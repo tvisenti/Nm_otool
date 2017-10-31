@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/30 13:21:03 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:58:03 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void			ft_nm(void *ptr, char *file)
 
 	ar = (void*)ptr;
 	magic_number = *(unsigned int *)ptr;
+	set_architecture(magic_number);
 	if (magic_number == MH_MAGIC_64)
 		handle_64(ptr);
 	else if (magic_number == MH_MAGIC)
@@ -61,6 +62,8 @@ int				loop_arg(char *av)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 	== MAP_FAILED)
 		return (print_error(av, "Is a directory"));
+	g_buff_addr = ptr;
+	g_buff_size = buf.st_size;
 	ft_nm(ptr, av);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (print_error(av, "Error with munmap"));
@@ -76,8 +79,11 @@ int				main(int ac, char **av)
 	str = NULL;
 	if (ac == 1)
 		loop_arg("a.out");
-	else if (ft_strchr(av[1], '-') && i++)
+	else if (ft_strchr(av[1], '-'))
+	{
 		check_bonus(av[1]);
+		i = g_bonus_nm != 0 ? i++ : i;
+	}
 	while (i < ac)
 	{
 		if (((ac == 3 && g_bonus_nm == 0) || ac > 3) &&

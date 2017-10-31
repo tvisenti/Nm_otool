@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/30 14:41:26 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:59:36 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "../libft/inc/ft_printf.h"
 
 int						g_bonus_nm;
+int						g_big_endian;
+uint32_t				g_buff_size;
+void					*g_buff_addr;
 
 typedef struct			s_symtab
 {
@@ -112,13 +115,14 @@ void					handle_lib(char *ptr, char *name);
 ** ARCH_FAT
 */
 
-uint32_t				swap_uint32(uint32_t val, unsigned int magic_number);
-void					handle_fat(char *ptr, unsigned int magic_number);
+uint32_t				swap_uint32(uint32_t val);
+void					handle_fat(char *ptr, char *file);
 
 /*
 ** UTILS
 */
 
+void					set_architecture(unsigned int magic_number);
 char					type_n_sect(unsigned int n_sect, t_symtab *symt);
 char					get_type(uint32_t type, uint32_t n_sect, int value,
 	t_symtab *symt);

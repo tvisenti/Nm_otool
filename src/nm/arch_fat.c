@@ -6,37 +6,41 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:07:11 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/26 15:56:17 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/10/31 14:59:06 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-uint32_t		swap_uint32(uint32_t val, unsigned int magic_number)
+uint32_t		swap_uint32(uint32_t val)
 {
-	if (magic_number == FAT_MAGIC)
+	if (!g_big_endian)
 		return (val);
-	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
-	return (val << 16) | (val >> 16);
+	return (((val & 0xFF) << 24) | (((val >> 8) & 0xFF) << 16) |
+		(((val >> 16) & 0xFF) << 8) | ((val >> 24) & 0xFF));
 }
 
-void			handle_fat(char *ptr, unsigned int magic_number)
+void			handle_fat(char *ptr, char *file)
 {
-	struct fat_header	*fat;
-	struct fat_arch		*arch;
-	uint32_t			i;
-	uint32_t			offset;
+	struct fat_header		*fat_header;
+	struct fat_arch			*arch;
+	uint32_t				offset;
+	struct mach_header_64	*header;
+	uint32_t				i;
 
-	fat = (void*)ptr;
-	i = fat->nfat_arch;
-	i = swap_uint32(i, magic_number);
-	arch = (void*)ptr + sizeof(fat);
-	while (i)
+	fat_header = (struct fat_header *)ptr;
+	arch = (void *)fat_header + sizeof(*fat_header);
+	offset = swap_uint32(arch->offset);
+	i = 0;
+	while (i < swap_uint32(fat_header->nfat_arch))
 	{
-		if (swap_uint32(arch->cputype, magic_number) == CPU_TYPE_X86_64)
-			offset = arch->offset;
-		arch += sizeof(arch) / sizeof(void*);
-		i--;
+		offset = swap_uint32(arch->offset);
+		header = (void *)ptr + offset;
+		if (swap_uint32(arch->cputype) == CPU_TYPE_X86_64)
+			break ;
+		arch = (void *)arch + sizeof(*arch);
+		i++;
 	}
-	ft_nm(ptr + swap_uint32(offset, magic_number), NULL);
+	header = (void *)ptr + offset;
+	return (ft_nm((void *)header, file));
 }
