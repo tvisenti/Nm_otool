@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/18 14:42:35 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/27 14:18:45 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/10/31 15:01:07 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ res:
 	@mkdir -p res/
 	@cat /usr/include/mach-o/loader.h > res/loader.h
 	@cat /usr/include/mach-o/nlist.h > res/nlist.h
+	@cat /usr/include/mach/machine.h > res/machine.h
 	@cat /usr/include/ar.h > res/ar.h
 
 clean:
