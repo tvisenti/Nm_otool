@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 10:09:38 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 11:29:08 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "../libft/inc/ft_printf.h"
 
 int						g_bonus_otool;
+int						g_big_endian;
 
 typedef struct			s_offlist
 {
@@ -93,9 +94,8 @@ void					handle_lib(char *ptr, char *name);
 ** ARCH_FAT
 */
 
-uint32_t				swap_uint32(uint32_t val, unsigned int magic_number);
-void					handle_fat(char *ptr, unsigned int magic_number,
-	char *file);
+uint32_t				swap_uint32(uint32_t val);
+void					handle_fat(char *ptr, char *file);
 
 /*
 ** SYMTAB

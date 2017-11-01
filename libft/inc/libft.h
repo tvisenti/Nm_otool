@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 09:06:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 10:54:55 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 10:20:58 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int					ft_islower(int c);
 char				*ft_strocpy(char *str, char c);
 
 int					get_next_line(int const fd, char **line);
+int					ft_printf(const char *format, ...);
 
 #endif

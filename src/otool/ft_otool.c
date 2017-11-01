@@ -6,11 +6,19 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:44:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 14:08:54 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 11:29:23 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
+
+void			set_architecture(unsigned int magic_number)
+{
+	g_big_endian = 0;
+	if (magic_number == MH_CIGAM_64 || magic_number == MH_CIGAM
+		|| magic_number == FAT_CIGAM)
+		g_big_endian = 1;
+}
 
 int				print_error(char *av, char *str)
 {
@@ -25,6 +33,7 @@ int				ft_otool(char *ptr, char *file, int display)
 
 	ar = (void*)ptr;
 	magic_number = *(unsigned int *)ptr;
+	set_architecture(magic_number);
 	if (magic_number == MH_MAGIC_64)
 		handle_64(ptr, file, display);
 	else if (magic_number == MH_MAGIC)
@@ -32,7 +41,7 @@ int				ft_otool(char *ptr, char *file, int display)
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
 		handle_lib(ptr, file);
 	else if (magic_number == FAT_MAGIC || magic_number == FAT_CIGAM)
-		handle_fat(ptr, magic_number, file);
+		handle_fat(ptr, file);
 	else
 		print_error(file, "The file was not recognized as a valid object file");
 	return (0);
