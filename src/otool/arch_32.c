@@ -6,68 +6,27 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 14:10:46 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 10:07:27 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
 
-static void		symtab_building_bis(struct segment_command *seg,
-	struct section *sect, struct mach_header *header)
+static int		compare_strx(char *stringtable, struct nlist *array,
+	uint32_t increment)
 {
-	uint32_t	i;
-
-	i = 0;
-	while (i < seg->nsects)
-	{
-		if (g_bonus_otool == 0)
-		{
-			if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
-			ft_strcmp(sect->segname, SEG_TEXT) == 0)
-			{
-				print_section(sect->addr, sect->size,
-					(char *)header + sect->offset,
-					"Contents of (__TEXT,__text) section");
-			}
-		}
-		else if (ft_strcmp(sect->sectname, SECT_DATA) == 0 &&
-		ft_strcmp(sect->segname, SEG_DATA) == 0)
-		{
-			print_section(sect->addr, sect->size,
-				(char *)header + sect->offset,
-				"Contents of (__DATA,__data) section");
-		}
-		sect = (void *)sect + sizeof(*sect);
-		i++;
-	}
-}
-
-void			symtab_building(struct mach_header *header,
-	struct load_command *lc)
-{
-	uint32_t				i;
-	struct segment_command	*seg;
-	struct section			*sect;
-
-	i = 0;
-	while (i < header->ncmds)
-	{
-		if (lc->cmd == LC_SEGMENT)
-		{
-			seg = (struct segment_command *)lc;
-			sect = (struct section *)((void *)seg + sizeof(*seg));
-			symtab_building_bis(seg, sect, header);
-		}
-		lc = (void *)lc + lc->cmdsize;
-		i++;
-	}
+	if (ft_strcmp(stringtable + array[increment].n_un.n_strx,
+		stringtable + array[increment + 1].n_un.n_strx) == 0 &&
+		array[increment].n_value != 0 && array[increment + 1].n_value != 0)
+		return (1);
+	return (0);
 }
 
 static void		sort_duplicate_strx_by_value(struct nlist *array,
 	char *stringtable, uint32_t size)
 {
-	int				sorted;
 	uint64_t		tmp_value;
+	int				sorted;
 	uint32_t		increment;
 
 	sorted = 0;
@@ -75,11 +34,10 @@ static void		sort_duplicate_strx_by_value(struct nlist *array,
 	while (!sorted)
 	{
 		sorted = 1;
-		increment = -1;
-		while ((uint32_t)++increment < size - 1)
+		increment = 0;
+		while (increment < size - 1)
 		{
-			if (ft_strcmp(stringtable + array[increment].n_un.n_strx,
-				stringtable + array[increment + 1].n_un.n_strx) == 0)
+			if (compare_strx(stringtable, array, increment))
 			{
 				if (array[increment].n_value > array[increment + 1].n_value)
 				{
@@ -89,6 +47,7 @@ static void		sort_duplicate_strx_by_value(struct nlist *array,
 					sorted = 0;
 				}
 			}
+			++increment;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 16:27:21 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 10:02:58 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct			s_offlist
 */
 
 int						check_range_addr(void *ptr);
-t_symtab				init_symtab(void);
 void					ft_nm(void *ptr, char *file);
 void					loop_arg(char *av);
 
@@ -84,8 +83,6 @@ struct nlist_64			*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 ** ARCH_64
 */
 
-void					symtab_building_64(t_symtab *symt,
-	struct mach_header_64 *header, struct load_command *lc);
 void					print_output_64(struct symtab_command *sym,
 	struct mach_header_64 *header, char *ptr);
 void					handle_64(char *ptr);
@@ -94,8 +91,6 @@ void					handle_64(char *ptr);
 ** ARCH_32
 */
 
-void					symtab_building(t_symtab *symt,
-	struct mach_header *header, struct load_command *lc);
 void					print_output(struct symtab_command *sym,
 	struct mach_header *header, char *ptr);
 void					handle_32(char *ptr);
@@ -121,11 +116,27 @@ void					handle_fat(char *ptr, char *file);
 ** UTILS
 */
 
-void					set_architecture(unsigned int magic_number);
 char					type_n_sect(unsigned int n_sect, t_symtab *symt);
 char					get_type(uint32_t type, uint32_t n_sect, int value,
 	t_symtab *symt);
 int						search_lst(t_offlist *lst, uint32_t off);
 void					check_bonus(char *bonus);
+
+/*
+** SYMTAB
+*/
+
+void					symtab_building_64(t_symtab *symt,
+	struct mach_header_64 *header, struct load_command *lc);
+
+void					symtab_building(t_symtab *symt,
+	struct mach_header *header, struct load_command *lc);
+
+/*
+** SET_ENV
+*/
+
+void					set_architecture(unsigned int magic_number);
+t_symtab				init_symtab(void);
 
 #endif

@@ -6,19 +6,11 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 14:50:27 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 14:59:15 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 09:50:00 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
-
-void		set_architecture(unsigned int magic_number)
-{
-	g_big_endian = 0;
-	if (magic_number == MH_CIGAM_64 || magic_number == MH_CIGAM
-		|| magic_number == FAT_CIGAM)
-		g_big_endian = 1;
-}
 
 char		type_n_sect(unsigned int n_sect, t_symtab *symt)
 {

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:44:03 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 17:46:47 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 09:50:13 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@ int				check_range_addr(void *ptr)
 	if (ptr <= (g_buff_addr + g_buff_size))
 		return (0);
 	return (1);
-}
-
-t_symtab		init_symtab(void)
-{
-	t_symtab	symt;
-
-	symt.data = 0;
-	symt.bss = 0;
-	symt.text = 0;
-	symt.ns = 1;
-	return (symt);
 }
 
 void			ft_nm(void *ptr, char *file)

@@ -6,54 +6,20 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 17:46:41 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 10:02:14 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static void		symtab_building_bis_64(t_symtab *symt,
-	struct segment_command_64 *seg, struct section_64 *sect)
+static int		compare_strx_64(char *stringtable, struct nlist_64 *array,
+	uint32_t increment)
 {
-	uint32_t	i;
-
-	i = 0;
-	while (i < seg->nsects)
-	{
-		if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
-		ft_strcmp(sect->segname, SEG_TEXT) == 0)
-			symt->text = symt->ns;
-		else if (ft_strcmp(sect->sectname, SECT_DATA) == 0 &&
-		ft_strcmp(sect->segname, SEG_DATA) == 0)
-			symt->data = symt->ns;
-		else if (ft_strcmp(sect->sectname, SECT_BSS) == 0 &&
-		ft_strcmp(sect->segname, SEG_DATA) == 0)
-			symt->bss = symt->ns;
-		sect = (void *)sect + sizeof(*sect);
-		symt->ns++;
-		i++;
-	}
-}
-
-void			symtab_building_64(t_symtab *symt,
-	struct mach_header_64 *header, struct load_command *lc)
-{
-	uint32_t					i;
-	struct segment_command_64	*seg;
-	struct section_64			*sect;
-
-	i = 0;
-	while (i < header->ncmds)
-	{
-		if (lc->cmd == LC_SEGMENT_64)
-		{
-			seg = (struct segment_command_64 *)lc;
-			sect = (struct section_64 *)((void *)seg + sizeof(*seg));
-			symtab_building_bis_64(symt, seg, sect);
-		}
-		lc = (void *)lc + lc->cmdsize;
-		i++;
-	}
+	if (ft_strcmp(stringtable + array[increment].n_un.n_strx,
+		stringtable + array[increment + 1].n_un.n_strx) == 0 &&
+		array[increment].n_value != 0 && array[increment + 1].n_value != 0)
+		return (1);
+	return (0);
 }
 
 static void		sort_duplicate_strx_by_value_64(struct nlist_64 *array,
@@ -61,18 +27,17 @@ static void		sort_duplicate_strx_by_value_64(struct nlist_64 *array,
 {
 	uint64_t		tmp_value;
 	int				sorted;
-	int				increment;
+	uint32_t		increment;
 
 	sorted = 0;
 	tmp_value = 0;
 	while (!sorted)
 	{
 		sorted = 1;
-		increment = -1;
-		while ((uint32_t)++increment < size - 1)
+		increment = 0;
+		while (increment < size - 1)
 		{
-			if (ft_strcmp(stringtable + array[increment].n_un.n_strx,
-				stringtable + array[increment + 1].n_un.n_strx) == 0)
+			if (compare_strx_64(stringtable, array, increment))
 			{
 				if (array[increment].n_value > array[increment + 1].n_value)
 				{
@@ -82,6 +47,7 @@ static void		sort_duplicate_strx_by_value_64(struct nlist_64 *array,
 					sorted = 0;
 				}
 			}
+			++increment;
 		}
 	}
 }

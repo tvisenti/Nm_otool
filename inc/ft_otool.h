@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 14:16:16 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 10:09:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ struct nlist_64			*bubble_sort_64(char *stringtable, struct nlist_64 *tab,
 ** ARCH_64
 */
 
-void					symtab_building_64(struct mach_header_64 *header,
-	struct load_command *lc);
 void					print_output_64(struct symtab_command *sym,
 	struct mach_header_64 *header, char *ptr);
 void					handle_64(char *ptr, char *file, int display);
@@ -77,8 +75,6 @@ void					handle_64(char *ptr, char *file, int display);
 ** ARCH_32
 */
 
-void					symtab_building(struct mach_header *header,
-	struct load_command *lc);
 void					print_output(struct symtab_command *sym,
 	struct mach_header *header, char *ptr);
 void					handle_32(char *ptr, char *file, int display);
@@ -100,6 +96,15 @@ void					handle_lib(char *ptr, char *name);
 uint32_t				swap_uint32(uint32_t val, unsigned int magic_number);
 void					handle_fat(char *ptr, unsigned int magic_number,
 	char *file);
+
+/*
+** SYMTAB
+*/
+
+void					symtab_building_64(struct mach_header_64 *header,
+	struct load_command *lc);
+void					symtab_building(struct mach_header *header,
+	struct load_command *lc);
 
 /*
 ** UTILS

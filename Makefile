@@ -6,7 +6,7 @@
 #    By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/18 14:42:35 by tvisenti          #+#    #+#              #
-#    Updated: 2017/10/31 17:42:37 by tvisenti         ###   ########.fr        #
+#    Updated: 2017/11/01 10:06:51 by tvisenti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ SRC_NM = 			ft_nm.c \
 					arch_32.c \
 					arch_lib.c \
 					arch_fat.c \
-					utils.c
+					utils.c \
+					set_env.c \
+					symtab.c
 
 SRC_OTOOL = 		ft_otool.c \
 					sort.c \
@@ -39,7 +41,8 @@ SRC_OTOOL = 		ft_otool.c \
 					arch_32.c \
 					arch_lib.c \
 					arch_fat.c \
-					utils.c
+					utils.c \
+					symtab.c
 
 OBJ_NM = 			$(addprefix $(OBJ_DIR_NM)/,$(SRC_NM:.c=.o))
 OBJ_OTOOL = 		$(addprefix $(OBJ_DIR_OTOOL)/,$(SRC_OTOOL:.c=.o))
