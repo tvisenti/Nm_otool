@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 10:07:27 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 16:51:51 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int		compare_strx(char *stringtable, struct nlist *array,
 {
 	if (ft_strcmp(stringtable + array[increment].n_un.n_strx,
 		stringtable + array[increment + 1].n_un.n_strx) == 0 &&
-		array[increment].n_value != 0 && array[increment + 1].n_value != 0)
+		(array[increment].n_value != 0 || array[increment + 1].n_value != 0))
 		return (1);
 	return (0);
 }
@@ -25,12 +25,11 @@ static int		compare_strx(char *stringtable, struct nlist *array,
 static void		sort_duplicate_strx_by_value(struct nlist *array,
 	char *stringtable, uint32_t size)
 {
-	uint64_t		tmp_value;
+	struct nlist	tmp_value;
 	int				sorted;
 	uint32_t		increment;
 
 	sorted = 0;
-	tmp_value = 0;
 	while (!sorted)
 	{
 		sorted = 1;
@@ -41,9 +40,9 @@ static void		sort_duplicate_strx_by_value(struct nlist *array,
 			{
 				if (array[increment].n_value > array[increment + 1].n_value)
 				{
-					tmp_value = array[increment + 1].n_value;
-					array[increment + 1].n_value = array[increment].n_value;
-					array[increment].n_value = tmp_value;
+					tmp_value = array[increment + 1];
+					array[increment + 1] = array[increment];
+					array[increment] = tmp_value;
 					sorted = 0;
 				}
 			}

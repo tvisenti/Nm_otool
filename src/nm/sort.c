@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/18 10:19:40 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/31 16:44:16 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/01 14:02:53 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_offlist			*order_off(t_offlist *lst)
 
 	cur = lst;
 	stop = 1;
-	while (stop)
+	while (cur && stop)
 	{
 		stop = 0;
 		cur = lst;
