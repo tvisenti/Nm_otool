@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 16:51:36 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 13:37:47 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ void			handle_32(char *ptr)
 			break ;
 		}
 		lc = (void *)lc + lc->cmdsize;
+		if (check_range_addr(lc))
+			return (print_error("file", "truncated or malformed object"));
 	}
 }

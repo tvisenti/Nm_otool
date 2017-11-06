@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:07:11 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 11:34:12 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 13:50:34 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ void			handle_fat(char *ptr, char *file)
 		if (swap_uint32(arch->cputype) == CPU_TYPE_X86_64)
 			break ;
 		arch = (void *)arch + sizeof(*arch);
+		if (check_range_addr(arch) || check_range_addr(header))
+			return (print_error("file", "truncated or malformed object"));
 		i++;
 	}
 	header = (void *)ptr + offset;
+	if (check_range_addr(header))
+		return (print_error("file", "truncated or malformed object"));
 	return (ft_nm((void *)header, file));
 }

@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 11:29:08 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/03 13:27:08 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int						loop_arg_otool(char *av);
 ** DISPLAY
 */
 
+void					print_section_64(long unsigned int addr,
+	unsigned int size, char *ptr, char *section);
 void					print_section(long unsigned int addr, unsigned int size,
 	char *ptr, char *section);
 

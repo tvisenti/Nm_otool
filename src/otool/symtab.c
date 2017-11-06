@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 10:05:05 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 10:05:51 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/03 13:30:22 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void		symtab_building_bis_64(struct segment_command_64
 			if (ft_strcmp(sect->sectname, SECT_TEXT) == 0 &&
 			ft_strcmp(sect->segname, SEG_TEXT) == 0)
 			{
-				print_section(sect->addr, sect->size,
+				print_section_64(sect->addr, sect->size,
 					(char *)header + sect->offset,
 					"Contents of (__TEXT,__text) section");
 			}
@@ -84,7 +84,7 @@ static void		symtab_building_bis_64(struct segment_command_64
 		else if (ft_strcmp(sect->sectname, SECT_DATA) == 0 &&
 		ft_strcmp(sect->segname, SEG_DATA) == 0)
 		{
-			print_section(sect->addr, sect->size,
+			print_section_64(sect->addr, sect->size,
 				(char *)header + sect->offset,
 				"Contents of (__DATA,__data) section");
 		}
