@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:13:31 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 16:51:59 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 17:58:39 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ void			print_output_64(struct symtab_command *sym,
 	lc = (void *)ptr + sizeof(*header);
 	array = (void *)ptr + sym->symoff;
 	stringtable = (void *)ptr + sym->stroff;
+	if (check_range_addr(array) || check_range_addr(stringtable) ||
+	check_range_addr(lc))
+		return (print_error("file", "truncated or malformed object"));
 	array = bubble_sort_64(stringtable, array, sym->nsyms);
 	sort_duplicate_strx_by_value_64(array, stringtable, sym->nsyms);
 	symtab_building_64(header, lc);
@@ -90,6 +93,8 @@ void			handle_64(char *ptr, char *file, int display)
 			print_output_64(sym, header, ptr);
 			break ;
 		}
+		if (check_range_addr(lc))
+			return (print_error("file", "truncated or malformed object"));
 		lc = (void *)lc + lc->cmdsize;
 	}
 }

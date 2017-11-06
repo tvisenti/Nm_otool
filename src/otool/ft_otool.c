@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 10:44:41 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 11:29:23 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 17:59:39 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void			set_architecture(unsigned int magic_number)
 		g_big_endian = 1;
 }
 
-int				print_error(char *av, char *str)
+void			print_error(char *av, char *str)
 {
 	ft_printf("ft_otool: %s: %s\n", av, str);
-	return (0);
+	return ;
 }
 
 int				ft_otool(char *ptr, char *file, int display)
@@ -47,7 +47,7 @@ int				ft_otool(char *ptr, char *file, int display)
 	return (0);
 }
 
-int				loop_arg_otool(char *av)
+void			loop_arg_otool(char *av)
 {
 	struct stat	buf;
 	int			fd;
@@ -60,10 +60,11 @@ int				loop_arg_otool(char *av)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 	== MAP_FAILED)
 		return (print_error(av, "Is a directory"));
+	g_buff_addr = ptr;
+	g_buff_size = buf.st_size;
 	ft_otool(ptr, av, 1);
 	if (munmap(ptr, buf.st_size) < 0)
 		return (print_error(av, "Error with munmap"));
-	return (1);
 }
 
 int				main(int ac, char **av)

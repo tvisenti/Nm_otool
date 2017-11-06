@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/16 16:47:55 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/03 13:27:08 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 18:00:38 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 int						g_bonus_otool;
 int						g_big_endian;
+uint32_t				g_buff_size;
+void					*g_buff_addr;
 
 typedef struct			s_offlist
 {
@@ -41,9 +43,9 @@ int						ft_printf(const char *str, ...);
 ** FT_OTOOL
 */
 
-int						print_error(char *av, char *str);
+void					print_error(char *av, char *str);
 int						ft_otool(char *ptr, char *str, int display);
-int						loop_arg_otool(char *av);
+void					loop_arg_otool(char *av);
 
 /*
 ** DISPLAY
@@ -96,6 +98,7 @@ void					handle_lib(char *ptr, char *name);
 ** ARCH_FAT
 */
 
+int						check_range_addr(void *ptr);
 uint32_t				swap_uint32(uint32_t val);
 void					handle_fat(char *ptr, char *file);
 

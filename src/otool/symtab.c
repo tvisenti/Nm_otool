@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 10:05:05 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/03 13:30:22 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 17:57:28 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			symtab_building(struct mach_header *header,
 			sect = (struct section *)((void *)seg + sizeof(*seg));
 			symtab_building_bis(seg, sect, header);
 		}
+		if (check_range_addr(lc))
+			return (print_error("file", "truncated or malformed object"));
 		lc = (void *)lc + lc->cmdsize;
 		i++;
 	}
@@ -109,6 +111,8 @@ void			symtab_building_64(struct mach_header_64 *header,
 			sect = (struct section_64 *)((void *)seg + sizeof(*seg));
 			symtab_building_bis_64(seg, sect, header);
 		}
+		if (check_range_addr(lc))
+			return (print_error("file", "truncated or malformed object"));
 		lc = (void *)lc + lc->cmdsize;
 		i++;
 	}

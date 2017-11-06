@@ -6,11 +6,18 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 15:07:11 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 11:36:32 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 18:01:17 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
+
+int				check_range_addr(void *ptr)
+{
+	if (ptr <= (g_buff_addr + g_buff_size))
+		return (0);
+	return (1);
+}
 
 uint32_t		swap_uint32(uint32_t val)
 {
@@ -37,6 +44,8 @@ void			handle_fat(char *ptr, char *file)
 	{
 		offset = swap_uint32(arch->offset);
 		header = (void *)ptr + offset;
+		if (check_range_addr(arch) || check_range_addr(header))
+			return (print_error("file", "truncated or malformed object"));
 		if (swap_uint32(arch->cputype) == CPU_TYPE_X86_64)
 			break ;
 		arch = (void *)arch + sizeof(*arch);

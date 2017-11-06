@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 17:22:52 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/10/27 12:00:40 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 18:01:29 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void			handle_lib(char *ptr, char *name)
 	offset_struct = (void*)ptr + sizeof(struct ar_hdr) + SARMAG + i;
 	ran = (void*)ptr + sizeof(struct ar_hdr) + SARMAG + i + sizeof(uint32_t);
 	size = (*((int *)offset_struct)) / sizeof(struct ranlib);
+	if (check_range_addr(ran) || check_range_addr(offset_struct))
+		return (print_error("file", "truncated or malformed object"));
 	i = -1;
 	while (++i < size)
 		lst = add_off(lst, ran[i].ran_off, ran[i].ran_un.ran_strx);

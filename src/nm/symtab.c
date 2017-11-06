@@ -6,7 +6,7 @@
 /*   By: tvisenti <tvisenti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 09:53:30 by tvisenti          #+#    #+#             */
-/*   Updated: 2017/11/01 09:54:19 by tvisenti         ###   ########.fr       */
+/*   Updated: 2017/11/06 17:54:31 by tvisenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void		symtab_building_bis(t_symtab *symt,
 		else if (ft_strcmp(sect->sectname, SECT_BSS) == 0 &&
 		ft_strcmp(sect->segname, SEG_DATA) == 0)
 			symt->bss = symt->ns;
+		if (check_range_addr(sect))
+			return (print_error("file", "truncated or malformed object"));
 		sect = (void *)sect + sizeof(*sect);
 		symt->ns++;
 		i++;
@@ -51,6 +53,8 @@ void			symtab_building(t_symtab *symt,
 			sect = (struct section *)((void *)seg + sizeof(*seg));
 			symtab_building_bis(symt, seg, sect);
 		}
+		if (check_range_addr(lc))
+			return (print_error("file", "truncated or malformed object"));
 		lc = (void *)lc + lc->cmdsize;
 		i++;
 	}
@@ -73,6 +77,8 @@ static void		symtab_building_bis_64(t_symtab *symt,
 		else if (ft_strcmp(sect->sectname, SECT_BSS) == 0 &&
 		ft_strcmp(sect->segname, SEG_DATA) == 0)
 			symt->bss = symt->ns;
+		if (check_range_addr(sect))
+			return (print_error("file", "truncated or malformed object"));
 		sect = (void *)sect + sizeof(*sect);
 		symt->ns++;
 		i++;
@@ -95,6 +101,8 @@ void			symtab_building_64(t_symtab *symt,
 			sect = (struct section_64 *)((void *)seg + sizeof(*seg));
 			symtab_building_bis_64(symt, seg, sect);
 		}
+		if (check_range_addr(lc))
+			return (print_error("file", "truncated or malformed object"));
 		lc = (void *)lc + lc->cmdsize;
 		i++;
 	}
